@@ -1,6 +1,7 @@
 package com.projetoweb4.comandaRestaurante.entity;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.projetoweb4.comandaRestaurante.dto.itemPedido.ItemPedidoDtoCadastrar;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -19,7 +20,7 @@ public class ItemPedido {
 	private Long id;
 	
 	private String quantidade;
-	private String observacoes;
+	private String observacao;
 	
 	@ManyToOne
     @JoinColumn(name = "fk_pedido")
@@ -30,13 +31,17 @@ public class ItemPedido {
     @JoinColumn(name = "fk_produto")
     private Produto produto;
 
-	public ItemPedido() {
-	}
-
 	public ItemPedido(Long id, String quantidade, String observacoes, Pedido pedido, Produto produto) {
 		this.id = id;
 		this.quantidade = quantidade;
-		this.observacoes = observacoes;
+		this.observacao = observacoes;
+		this.pedido = pedido;
+		this.produto = produto;
+	}
+
+	public ItemPedido(ItemPedidoDtoCadastrar dados, Pedido pedido, Produto produto) {
+		this.quantidade = dados.quantidade();
+		this.observacao = dados.observacoes();
 		this.pedido = pedido;
 		this.produto = produto;
 	}
@@ -58,11 +63,11 @@ public class ItemPedido {
 	}
 
 	public String getObservacoes() {
-		return observacoes;
+		return observacao;
 	}
 
 	public void setObservacoes(String observacoes) {
-		this.observacoes = observacoes;
+		this.observacao = observacoes;
 	}
 
 	public Pedido getPedido() {
@@ -79,6 +84,9 @@ public class ItemPedido {
 
 	public void setProduto(Produto produto) {
 		this.produto = produto;
+	}
+
+	public ItemPedido() {
 	}
 	
 }

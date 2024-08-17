@@ -4,7 +4,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.projetoweb4.comandaRestaurante.dto.pedido.PedidoDtoCadastrar;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -20,10 +22,10 @@ public class Pedido {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	
-	private String mesa;
+	private Integer mesa;
 	private String comanda;
 	
-	@OneToMany(mappedBy = "pedido")
+	 @OneToMany(mappedBy = "pedido", cascade = CascadeType.ALL, orphanRemoval = true)
 	@JsonManagedReference // Controle de serialização para evitar recursão
 	private List<ItemPedido> itensPedido = new ArrayList<>();
 
@@ -35,11 +37,11 @@ public class Pedido {
 		this.id = id;
 	}
 
-	public String getMesa() {
+	public Integer getMesa() {
 		return mesa;
 	}
 
-	public void setMesa(String mesa) {
+	public void setMesa(Integer mesa) {
 		this.mesa = mesa;
 	}
 
@@ -59,11 +61,16 @@ public class Pedido {
 		this.itensPedido = itensPedido;
 	}
 
-	public Pedido(Long id, String mesa, String comanda, List<ItemPedido> itensPedido) {
+	public Pedido(Long id, Integer mesa, String comanda, List<ItemPedido> itensPedido) {
 		this.id = id;
 		this.mesa = mesa;
 		this.comanda = comanda;
 		this.itensPedido = itensPedido;
+	}
+	
+	public Pedido(PedidoDtoCadastrar dados) {
+		this.mesa = dados.mesa();
+		this.comanda = dados.comanda();
 	}
 
 	public Pedido() {

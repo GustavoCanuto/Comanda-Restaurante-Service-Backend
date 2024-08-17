@@ -35,19 +35,17 @@ public class ProdutoService implements CrudService<ProdutoDtoDetalhar, ProdutoDt
 
 	@Override
 	public ProdutoDtoDetalhar buscarPorId(Long id) {
-		// TODO Auto-generated method stub
-		return null;
+		return new ProdutoDtoDetalhar(repository.getReferenceById(id));
 	}
 
 	@Override
 	public Page<ProdutoDtoDetalhar> listarTodos(Pageable paginacao) {
-		// TODO Auto-generated method stub
-		return null;
+		return repository.findAll(paginacao).map(ProdutoDtoDetalhar::new);
 	}
 
 	@Override
 	public void deletar(Long id) {
-		// TODO Auto-generated method stub
+		repository.deleteById(id);
 		
 	}
 

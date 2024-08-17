@@ -19,6 +19,7 @@ public record ProdutoDtoCadastrar(
 		@Positive
 		Double preco,
 		@Size(max = 255)
+		@NotNull
 		String linkImagem,
 		@NotNull
 		@Enumerated(EnumType.STRING)

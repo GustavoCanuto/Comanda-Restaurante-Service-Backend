@@ -20,7 +20,7 @@ public class BuscarTipoProduto implements BuscarEntidade<TipoProduto, Short>  {
 		if (id != null) {
 
 			entidade = repository.findById(id)
-					.orElseThrow(() -> new ValidacaoException("Id informado não existe!"));
+					.orElseThrow(() -> new ValidacaoException("Id de "+ TipoProduto.class.getSimpleName() +" informado não existe!"));
 		}
 
 		return entidade;

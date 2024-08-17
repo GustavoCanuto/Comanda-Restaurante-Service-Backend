@@ -10,8 +10,7 @@ import jakarta.validation.constraints.Size;
 
 public record PedidoDtoCadastrar(
 		@NotNull
-		@Size(max = 255)
-		String mesa,
+		Integer mesa,
 		@NotNull
 		@Size(max = 255)
 		String comanda,

@@ -43,19 +43,7 @@ public class ProdutoController {
 
 	}
 	
-	@GetMapping
-	public ResponseEntity<Page<ProdutoDtoDetalhar>> listar(@PageableDefault(size = 10) Pageable paginacao) {
-		return null;
-		//return ResponseEntity.ok(pedidoService.listarPedidos(paginacao));
 
-	}
-	
-	@GetMapping("/{id}")
-	public ResponseEntity<ProdutoDtoDetalhar> detalhar(@PathVariable Long id) {
-		return null;
-		//return ResponseEntity.ok(cidadeService.detalharCidade(id));
-	}
-	
 	@DeleteMapping("/{id}")
 	@Transactional
 	public ResponseEntity<Void> excluir(@PathVariable Long id) {
@@ -64,4 +52,17 @@ public class ProdutoController {
 
 		return ResponseEntity.noContent().build();
 	}
+	
+	@GetMapping
+	public ResponseEntity<Page<ProdutoDtoDetalhar>> listar(@PageableDefault(size = 10) Pageable paginacao) {
+		
+		return ResponseEntity.ok(service.listarTodos(paginacao));
+	}
+	
+	@GetMapping("/{id}")
+	public ResponseEntity<ProdutoDtoDetalhar> detalhar(@PathVariable Long id) {
+		
+		return ResponseEntity.ok(service.buscarPorId(id));
+	}
+	
 }

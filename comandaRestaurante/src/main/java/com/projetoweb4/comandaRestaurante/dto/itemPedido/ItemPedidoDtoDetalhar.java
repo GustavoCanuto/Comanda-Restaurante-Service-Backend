@@ -1,20 +1,23 @@
 package com.projetoweb4.comandaRestaurante.dto.itemPedido;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
+import com.projetoweb4.comandaRestaurante.dto.pedido.PedidoDtoDetalhar;
+import com.projetoweb4.comandaRestaurante.dto.produto.ProdutoDtoDetalhar;
 import com.projetoweb4.comandaRestaurante.entity.ItemPedido;
-import com.projetoweb4.comandaRestaurante.entity.Pedido;
-import com.projetoweb4.comandaRestaurante.entity.Produto;
 
+@JsonInclude(JsonInclude.Include.NON_NULL)
 public record ItemPedidoDtoDetalhar(
 		Long id,
 		String quantidade,
 		String observacoes,
-		Pedido pedido,
-		Produto produto
+		PedidoDtoDetalhar pedido,
+		ProdutoDtoDetalhar produto
 		) {
 
-	public ItemPedidoDtoDetalhar(ItemPedido entidade) {
+	public ItemPedidoDtoDetalhar(ItemPedido entidade, boolean incluirPedido) {
 		this(entidade.getId(), entidade.getQuantidade(), entidade.getObservacoes(),
-				entidade.getPedido(), entidade.getProduto());
+				incluirPedido ? new PedidoDtoDetalhar(entidade.getPedido())  : null,
+				new ProdutoDtoDetalhar(entidade.getProduto()));
 	}
 
 }

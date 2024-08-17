@@ -4,7 +4,7 @@ import com.fasterxml.jackson.annotation.JsonCreator;
 
 public enum TipoProdutoEnum implements EnumBase{
 
- 	PRATO_TESTE((short) 1, "Prato"),
+ 	PRATO((short) 1, "Prato"),
  	BEBIDA((short) 2, "Bebida"), 
     SOBREMESA((short) 3, "Sobremesa");
 	
