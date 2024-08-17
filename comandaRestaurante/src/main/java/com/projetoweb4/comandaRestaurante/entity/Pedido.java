@@ -1,8 +1,10 @@
 package com.projetoweb4.comandaRestaurante.entity;
 
+import java.util.ArrayList;
 import java.util.List;
 
-import jakarta.persistence.CascadeType;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -21,17 +23,9 @@ public class Pedido {
 	private String mesa;
 	private String comanda;
 	
-	@OneToMany(mappedBy = "pedido", cascade = CascadeType.ALL)
-    private List<Prato> pratos;
-	
-	public Pedido(String mesa, String comanda) {
-		super();
-		this.mesa = mesa;
-		this.comanda = comanda;
-	}
-	
-	public Pedido() {
-	}
+	@OneToMany(mappedBy = "pedido")
+	@JsonManagedReference // Controle de serialização para evitar recursão
+	private List<ItemPedido> itensPedido = new ArrayList<>();
 
 	public Long getId() {
 		return id;
@@ -57,12 +51,22 @@ public class Pedido {
 		this.comanda = comanda;
 	}
 
-	public List<Prato> getPratos() {
-		return pratos;
+	public List<ItemPedido> getItensPedido() {
+		return itensPedido;
 	}
 
-	public void setPratos(List<Prato> pratos) {
-		this.pratos = pratos;
+	public void setItensPedido(List<ItemPedido> itensPedido) {
+		this.itensPedido = itensPedido;
+	}
+
+	public Pedido(Long id, String mesa, String comanda, List<ItemPedido> itensPedido) {
+		this.id = id;
+		this.mesa = mesa;
+		this.comanda = comanda;
+		this.itensPedido = itensPedido;
+	}
+
+	public Pedido() {
 	}
 
 	

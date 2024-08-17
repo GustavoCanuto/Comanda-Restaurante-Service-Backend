@@ -1,5 +1,7 @@
 package com.projetoweb4.comandaRestaurante.entity;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -8,49 +10,43 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 
-@Table(name = "tb_prato")
-@Entity(name = "Prato")
-public class Prato {
+@Table(name = "tb_item_pedido")
+@Entity(name = "ItemPedido")
+public class ItemPedido {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	
-	private String prato;
 	private String quantidade;
-	private Double observacoes;
+	private String observacoes;
 	
 	@ManyToOne
     @JoinColumn(name = "fk_pedido")
+	@JsonBackReference  // Controle de serialização para evitar recursão
     private Pedido pedido;
-
 	
-	public Prato(String prato, String quantidade, Double observacoes, Prato categoria, Pedido pedido) {
-		super();
-		this.prato = prato;
+	@ManyToOne
+    @JoinColumn(name = "fk_produto")
+    private Produto produto;
+
+	public ItemPedido() {
+	}
+
+	public ItemPedido(Long id, String quantidade, String observacoes, Pedido pedido, Produto produto) {
+		this.id = id;
 		this.quantidade = quantidade;
 		this.observacoes = observacoes;
 		this.pedido = pedido;
+		this.produto = produto;
 	}
 
-	public Prato() {
-
-	}
-	
 	public Long getId() {
 		return id;
 	}
 
 	public void setId(Long id) {
 		this.id = id;
-	}
-
-	public String getPrato() {
-		return prato;
-	}
-
-	public void setPrato(String prato) {
-		this.prato = prato;
 	}
 
 	public String getQuantidade() {
@@ -61,11 +57,11 @@ public class Prato {
 		this.quantidade = quantidade;
 	}
 
-	public Double getObservacoes() {
+	public String getObservacoes() {
 		return observacoes;
 	}
 
-	public void setObservacoes(Double observacoes) {
+	public void setObservacoes(String observacoes) {
 		this.observacoes = observacoes;
 	}
 
@@ -77,4 +73,12 @@ public class Prato {
 		this.pedido = pedido;
 	}
 
+	public Produto getProduto() {
+		return produto;
+	}
+
+	public void setProduto(Produto produto) {
+		this.produto = produto;
+	}
+	
 }

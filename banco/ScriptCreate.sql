@@ -29,7 +29,6 @@ CREATE TABLE tb_produto (
     preco DECIMAL(10, 2) NOT NULL,
     link_imagem VARCHAR(255) NOT NULL DEFAULT 'https://cdn.neemo.com.br/uploads/settings_webdelivery/logo/1209/nao-perfil.gif',
     fk_tipo_produto INT,
-    fk_cargo_funcionario INT,
     FOREIGN KEY (fk_tipo_produto) REFERENCES tb_dom_tipo_produto(id)
 );
 
