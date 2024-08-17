@@ -3,7 +3,7 @@ package com.projetoweb4.comandaRestaurante.dto.domain;
 import com.projetoweb4.comandaRestaurante.entity.domain.TipoProduto;
 
 public record TipoProdutoDtoDetalhar(
-		Long id,
+		Short id,
 		String nome
 		) {
 

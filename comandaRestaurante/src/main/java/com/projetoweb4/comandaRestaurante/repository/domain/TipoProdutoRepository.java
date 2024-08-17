@@ -4,6 +4,6 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 import com.projetoweb4.comandaRestaurante.entity.domain.TipoProduto;
 
-public interface TipoProdutoRepository extends JpaRepository<TipoProduto, Long> {
+public interface TipoProdutoRepository extends JpaRepository<TipoProduto, Short> {
 
 }

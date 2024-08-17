@@ -1,5 +1,6 @@
 package com.projetoweb4.comandaRestaurante.entity;
 
+import com.projetoweb4.comandaRestaurante.dto.produto.ProdutoDtoCadastrar;
 import com.projetoweb4.comandaRestaurante.entity.domain.TipoProduto;
 
 import jakarta.persistence.Entity;
@@ -36,6 +37,14 @@ public class Produto {
 		this.descricao = descricao;
 		this.preco = preco;
 		this.linkImagem = linkImagem;
+		this.tipoProduto = tipoProduto;
+	}
+
+	public Produto(ProdutoDtoCadastrar dados, TipoProduto tipoProduto) {
+		this.nome = dados.nome();
+		this.descricao = dados.descricao();
+		this.preco = dados.preco();
+		this.linkImagem = dados.linkImagem();
 		this.tipoProduto = tipoProduto;
 	}
 

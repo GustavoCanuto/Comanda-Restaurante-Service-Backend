@@ -1,8 +1,6 @@
 package com.projetoweb4.comandaRestaurante.entity.domain;
 
 import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 
@@ -11,12 +9,11 @@ import jakarta.persistence.Table;
 public class TipoProduto {
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Long id;
+	private Short id;
 	
 	private String nome;
 
-	public TipoProduto(Long id, String nome) {
+	public TipoProduto(Short id, String nome) {
 		this.id = id;
 		this.nome = nome;
 	}
@@ -24,11 +21,11 @@ public class TipoProduto {
 	public TipoProduto() {
 	}
 
-	public Long getId() {
+	public Short getId() {
 		return id;
 	}
 
-	public void setId(Long id) {
+	public void setId(Short id) {
 		this.id = id;
 	}
 
