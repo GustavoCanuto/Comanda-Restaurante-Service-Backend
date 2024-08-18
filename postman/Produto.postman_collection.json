@@ -1,0 +1,152 @@
+{
+	"info": {
+		"_postman_id": "bdf0c07a-599c-4a9c-852a-18e673c6464b",
+		"name": "Produto",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "29089140",
+		"_collection_link": "https://crimson-spaceship-325926.postman.co/workspace/comandaRestaurante~7a14a773-3a23-4f76-8361-b5f48416e023/collection/29089140-bdf0c07a-599c-4a9c-852a-18e673c6464b?action=share&source=collection_link&creator=29089140"
+	},
+	"item": [
+		{
+			"name": "Cadastrar Produto",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "descricao",
+							"value": "Pizza clássica com molho de tomate, queijo mozzarella e manjericão fresco",
+							"type": "text"
+						},
+						{
+							"key": "preco",
+							"value": "35.5",
+							"type": "text"
+						},
+						{
+							"key": "imagem",
+							"type": "file",
+							"src": "/C:/Users/Gustavo/Pictures/Screenshots/Screenshot 2024-08-13 183711.png"
+						},
+						{
+							"key": "tipoProduto",
+							"value": "bebida",
+							"type": "text"
+						},
+						{
+							"key": "nome",
+							"value": "teste2",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "http://localhost:8080/produto",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"produto"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Listar todos Produtos",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"nome\": \"gf\",\r\n  \"descricao\": \"Pizza clássica com molho de tomate, queijo mozzarella e manjericão fresco\",\r\n  \"preco\": 35.90,\r\n  \"linkImagem\": \"https://example.com/imagem/pizza-margherita.jpg\",\r\n  \"tipoProduto\": \"Bebida_t\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/produto",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"produto"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Detahar Produto",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"nome\": \"gf\",\r\n  \"descricao\": \"Pizza clássica com molho de tomate, queijo mozzarella e manjericão fresco\",\r\n  \"preco\": 35.90,\r\n  \"linkImagem\": \"https://example.com/imagem/pizza-margherita.jpg\",\r\n  \"tipoProduto\": \"Bebida_t\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/produto/1",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"produto",
+						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Deletar Produto",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"nome\": \"gf\",\r\n  \"descricao\": \"Pizza clássica com molho de tomate, queijo mozzarella e manjericão fresco\",\r\n  \"preco\": 35.90,\r\n  \"linkImagem\": \"https://example.com/imagem/pizza-margherita.jpg\",\r\n  \"tipoProduto\": \"Bebida_t\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/produto/2",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"produto",
+						"2"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

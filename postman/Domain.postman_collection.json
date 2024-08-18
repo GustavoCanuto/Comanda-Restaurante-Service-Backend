@@ -1,0 +1,31 @@
+{
+	"info": {
+		"_postman_id": "478a81b9-649c-47de-a367-7f5b4291ab29",
+		"name": "Domain",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "29089140",
+		"_collection_link": "https://crimson-spaceship-325926.postman.co/workspace/comandaRestaurante~7a14a773-3a23-4f76-8361-b5f48416e023/collection/29089140-478a81b9-649c-47de-a367-7f5b4291ab29?action=share&source=collection_link&creator=29089140"
+	},
+	"item": [
+		{
+			"name": "Listar Tipo Produtos",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/dominio/tipo-produto",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"dominio",
+						"tipo-produto"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

@@ -47,6 +47,7 @@ public class ProdutoService implements CrudService<ProdutoDtoDetalhar, ProdutoDt
 	}
 
 	public void deletar(Long id) {
+		//implementar delete de imagem por link
 		repository.deleteById(id);
 		
 	}
