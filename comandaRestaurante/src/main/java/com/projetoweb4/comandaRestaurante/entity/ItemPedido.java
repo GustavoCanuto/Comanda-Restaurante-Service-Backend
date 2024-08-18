@@ -19,7 +19,7 @@ public class ItemPedido {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	
-	private String quantidade;
+	private Integer quantidade;
 	private String observacao;
 	
 	@ManyToOne
@@ -31,7 +31,7 @@ public class ItemPedido {
     @JoinColumn(name = "fk_produto")
     private Produto produto;
 
-	public ItemPedido(Long id, String quantidade, String observacoes, Pedido pedido, Produto produto) {
+	public ItemPedido(Long id, Integer quantidade, String observacoes, Pedido pedido, Produto produto) {
 		this.id = id;
 		this.quantidade = quantidade;
 		this.observacao = observacoes;
@@ -54,11 +54,11 @@ public class ItemPedido {
 		this.id = id;
 	}
 
-	public String getQuantidade() {
+	public Integer getQuantidade() {
 		return quantidade;
 	}
 
-	public void setQuantidade(String quantidade) {
+	public void setQuantidade(Integer quantidade) {
 		this.quantidade = quantidade;
 	}
 

@@ -6,7 +6,7 @@ import jakarta.validation.constraints.Size;
 public record ItemPedidoDtoCadastrar(
 		@NotNull
 		@Size(max = 255)
-		String quantidade,
+		Integer quantidade,
 		@NotNull
 		@Size(max = 255)
 		String observacoes,

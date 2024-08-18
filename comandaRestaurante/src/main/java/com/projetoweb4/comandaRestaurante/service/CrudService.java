@@ -1,11 +1,13 @@
 package com.projetoweb4.comandaRestaurante.service;
 
+import java.io.IOException;
+
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
 public interface CrudService<T, G, ID> {
 
-	T cadastrar(G dados);
+	T cadastrar(G dados) throws IOException ;
 	
 	T buscarPorId(ID id);
 

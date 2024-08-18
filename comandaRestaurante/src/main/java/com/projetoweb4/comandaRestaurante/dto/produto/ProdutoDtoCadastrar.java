@@ -1,9 +1,10 @@
 package com.projetoweb4.comandaRestaurante.dto.produto;
 
+import org.springframework.web.multipart.MultipartFile;
+
+import com.projetoweb4.comandaRestaurante.enumeration.TipoEnumTeste;
 import com.projetoweb4.comandaRestaurante.enumeration.TipoProdutoEnum;
 
-import jakarta.persistence.EnumType;
-import jakarta.persistence.Enumerated;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Positive;
 import jakarta.validation.constraints.Size;
@@ -18,12 +19,10 @@ public record ProdutoDtoCadastrar(
 		@NotNull
 		@Positive
 		Double preco,
-		@Size(max = 255)
 		@NotNull
-		String linkImagem,
-		@NotNull
-		@Enumerated(EnumType.STRING)
-		TipoProdutoEnum tipoProduto
+		MultipartFile imagem,
+        TipoProdutoEnum tipoProduto,
+        TipoEnumTeste tipoTeste
 		) {
 
 }

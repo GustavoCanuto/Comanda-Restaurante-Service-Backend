@@ -1,15 +1,15 @@
 package com.projetoweb4.comandaRestaurante.enumeration;
 
-public enum TipoProdutoEnum implements EnumBase{
+public enum TipoEnumTeste implements EnumBase{
 
- 	PRATO((short) 1, "Prato"),
- 	BEBIDA((short) 2, "Bebida"), 
-    SOBREMESA((short) 3, "Sobremesa");
+ 	P((short) 1, "Prato"),
+ 	B((short) 2, "Bebida"), 
+    S((short) 3, "Sobremesa");
 	
 	private final Short id;
     private final String nome;
     
-    TipoProdutoEnum(Short id, String nome) {
+    TipoEnumTeste(Short id, String nome) {
         this.id = id;
         this.nome = nome;
     }

@@ -8,7 +8,7 @@ import com.projetoweb4.comandaRestaurante.entity.ItemPedido;
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public record ItemPedidoDtoDetalhar(
 		Long id,
-		String quantidade,
+		Integer quantidade,
 		String observacoes,
 		PedidoDtoDetalhar pedido,
 		ProdutoDtoDetalhar produto

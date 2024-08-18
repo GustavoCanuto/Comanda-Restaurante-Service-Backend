@@ -40,11 +40,11 @@ public class Produto {
 		this.tipoProduto = tipoProduto;
 	}
 
-	public Produto(ProdutoDtoCadastrar dados, TipoProduto tipoProduto) {
+	public Produto(ProdutoDtoCadastrar dados, TipoProduto tipoProduto, String linkImagem) {
 		this.nome = dados.nome();
 		this.descricao = dados.descricao();
 		this.preco = dados.preco();
-		this.linkImagem = dados.linkImagem();
+		this.linkImagem = linkImagem;
 		this.tipoProduto = tipoProduto;
 	}
 
