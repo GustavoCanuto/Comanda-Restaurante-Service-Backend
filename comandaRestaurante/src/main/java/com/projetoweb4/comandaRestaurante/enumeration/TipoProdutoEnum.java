@@ -1,5 +1,7 @@
 package com.projetoweb4.comandaRestaurante.enumeration;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
+
 public enum TipoProdutoEnum implements EnumBase{
 
  	PRATO((short) 1, "Prato"),
@@ -27,5 +29,9 @@ public enum TipoProdutoEnum implements EnumBase{
         return name();
     }
     
+	@JsonCreator
+	public static TipoProdutoEnum fromString(String valor) {
+		return EnumBase.fromString(TipoProdutoEnum.class, valor);
+	}
 }
 

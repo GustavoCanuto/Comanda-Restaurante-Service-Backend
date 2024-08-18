@@ -1,4 +1,4 @@
-package com.projetoweb4.comandaRestaurante.infra;
+package com.projetoweb4.comandaRestaurante.infra.handler;
 
 import java.util.List;
 

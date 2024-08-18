@@ -1,4 +1,4 @@
-package com.projetoweb4.comandaRestaurante.config;
+package com.projetoweb4.comandaRestaurante.infra.config;
 import java.beans.PropertyEditorSupport;
 
 import com.projetoweb4.comandaRestaurante.enumeration.EnumBase;

@@ -1,4 +1,4 @@
-package com.projetoweb4.comandaRestaurante.infra;
+package com.projetoweb4.comandaRestaurante.infra.config;
 
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.stereotype.Component;

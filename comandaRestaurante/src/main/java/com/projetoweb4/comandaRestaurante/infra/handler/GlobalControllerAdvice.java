@@ -1,4 +1,4 @@
-package com.projetoweb4.comandaRestaurante.infra;
+package com.projetoweb4.comandaRestaurante.infra.handler;
 
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -8,8 +8,8 @@ import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.InitBinder;
 
-import com.projetoweb4.comandaRestaurante.config.EnumBasePropertyEditor;
 import com.projetoweb4.comandaRestaurante.enumeration.EnumBase;
+import com.projetoweb4.comandaRestaurante.infra.config.EnumBasePropertyEditor;
 
 @ControllerAdvice
 public class GlobalControllerAdvice {

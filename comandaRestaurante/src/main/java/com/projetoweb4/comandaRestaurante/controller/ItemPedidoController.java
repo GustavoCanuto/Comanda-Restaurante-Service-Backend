@@ -56,12 +56,13 @@ public class ItemPedidoController {
 	
 	@GetMapping
 	public ResponseEntity<Page<ItemPedidoDtoDetalhar>> listar(@PageableDefault(size = 10) Pageable paginacao) {
+		
 		return ResponseEntity.ok(service.listarTodos(paginacao));
-
 	}
 	
 	@GetMapping("/{id}")
 	public ResponseEntity<ItemPedidoDtoDetalhar> detalhar(@PathVariable Long id) {
+		
 		return ResponseEntity.ok(service.buscarPorId(id));
 	}
 

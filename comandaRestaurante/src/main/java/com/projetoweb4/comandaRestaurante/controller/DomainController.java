@@ -24,7 +24,6 @@ public class DomainController {
 	public ResponseEntity<List<TipoProdutoDtoDetalhar>> listar() {
 
 		return ResponseEntity.ok(tipoProdutoRepository.findAll().stream().map(TipoProdutoDtoDetalhar::new).toList());
-
 	}
 	
 }
