@@ -1,5 +1,6 @@
 package com.projetoweb4.comandaRestaurante.entity;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -7,6 +8,7 @@ import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.projetoweb4.comandaRestaurante.dto.pedido.PedidoDtoCadastrar;
 
 import jakarta.persistence.CascadeType;
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -24,11 +26,30 @@ public class Pedido {
 	
 	private Integer mesa;
 	private String comanda;
+	@Column(name = "data_hora_pedido", updatable = false, columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
+	private LocalDateTime dataHoraPedido;
 	
-	 @OneToMany(mappedBy = "pedido", cascade = CascadeType.ALL, orphanRemoval = true)
-	@JsonManagedReference // Controle de serialização para evitar recursão
+	@OneToMany(mappedBy = "pedido", cascade = CascadeType.ALL, orphanRemoval = true)
+	@JsonManagedReference
 	private List<ItemPedido> itensPedido = new ArrayList<>();
 
+	public Pedido(Long id, Integer mesa, String comanda, List<ItemPedido> itensPedido) {
+		this.id = id;
+		this.mesa = mesa;
+		this.comanda = comanda;
+		this.dataHoraPedido = LocalDateTime.now();
+		this.itensPedido = itensPedido;
+	}
+	
+	public Pedido(PedidoDtoCadastrar dados) {
+		this.mesa = dados.mesa();
+		this.comanda = dados.comanda();
+		this.dataHoraPedido = LocalDateTime.now();
+	}
+
+	public Pedido() {
+	}
+	
 	public Long getId() {
 		return id;
 	}
@@ -61,20 +82,12 @@ public class Pedido {
 		this.itensPedido = itensPedido;
 	}
 
-	public Pedido(Long id, Integer mesa, String comanda, List<ItemPedido> itensPedido) {
-		this.id = id;
-		this.mesa = mesa;
-		this.comanda = comanda;
-		this.itensPedido = itensPedido;
-	}
-	
-	public Pedido(PedidoDtoCadastrar dados) {
-		this.mesa = dados.mesa();
-		this.comanda = dados.comanda();
+	public LocalDateTime getDataHoraPedido() {
+		return dataHoraPedido;
 	}
 
-	public Pedido() {
+	public void setDataHoraPedido(LocalDateTime dataHoraPedido) {
+		this.dataHoraPedido = dataHoraPedido;
 	}
-
 	
 }

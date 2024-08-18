@@ -45,6 +45,9 @@ public class ItemPedido {
 		this.pedido = pedido;
 		this.produto = produto;
 	}
+	
+	public ItemPedido() {
+	}
 
 	public Long getId() {
 		return id;
@@ -84,9 +87,6 @@ public class ItemPedido {
 
 	public void setProduto(Produto produto) {
 		this.produto = produto;
-	}
-
-	public ItemPedido() {
 	}
 	
 }

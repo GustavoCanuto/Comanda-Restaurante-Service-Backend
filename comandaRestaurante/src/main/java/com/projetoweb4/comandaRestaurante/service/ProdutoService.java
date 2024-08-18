@@ -15,7 +15,7 @@ import com.projetoweb4.comandaRestaurante.repository.ProdutoRepository;
 import com.projetoweb4.comandaRestaurante.service.buscador.BuscarTipoProduto;
 
 @Service
-public class ProdutoService{
+public class ProdutoService implements CrudService<ProdutoDtoDetalhar, ProdutoDtoCadastrar, Long>{
 
 	@Autowired
 	private ProdutoRepository repository;
