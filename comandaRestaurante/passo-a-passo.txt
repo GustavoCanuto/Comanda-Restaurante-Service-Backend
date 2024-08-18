@@ -1,0 +1,5 @@
+mvn clean package
+
+docker build -t gustavocanuto/comandarestaurante:v1 .
+
+docker push gustavocanuto/comandarestaurante:v1
