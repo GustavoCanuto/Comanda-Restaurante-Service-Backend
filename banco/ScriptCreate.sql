@@ -62,6 +62,14 @@ CREATE TABLE tb_status_pedido (
     FOREIGN KEY (fk_status) REFERENCES tb_dom_status(id)
 );
 
+CREATE TABLE tb_login (
+    id INT PRIMARY KEY AUTO_INCREMENT,
+    fk_funcionario INT NOT NULL,
+    email VARCHAR(255) UNIQUE NOT NULL,
+    senha VARCHAR(255) NOT NULL, -- Armazenar a senha em formato hash
+    FOREIGN KEY (fk_funcionario) REFERENCES tb_funcionario(id)
+);
+
 -- insert domains
 insert into tb_dom_tipo_produto(id,nome) values
 (1, 'Prato'),
