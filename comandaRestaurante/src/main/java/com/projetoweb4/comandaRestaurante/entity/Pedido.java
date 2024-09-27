@@ -13,6 +13,8 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 
@@ -32,24 +34,33 @@ public class Pedido {
 	@OneToMany(mappedBy = "pedido", cascade = CascadeType.ALL, orphanRemoval = true)
 	@JsonManagedReference
 	private List<ItemPedido> itensPedido = new ArrayList<>();
+	
+	@ManyToOne
+    @JoinColumn(name = "fk_funcionario")
+    private Funcionario funcionario;
 
-	public Pedido(Long id, Integer mesa, String comanda, List<ItemPedido> itensPedido) {
+	public Pedido(Long id, Integer mesa, String comanda, LocalDateTime dataHoraPedido, List<ItemPedido> itensPedido,
+			Funcionario funcionario) {
+		super();
 		this.id = id;
 		this.mesa = mesa;
 		this.comanda = comanda;
-		this.dataHoraPedido = LocalDateTime.now();
+		this.dataHoraPedido = dataHoraPedido;
 		this.itensPedido = itensPedido;
+		this.funcionario = funcionario;
 	}
-	
-	public Pedido(PedidoDtoCadastrar dados) {
+
+	public Pedido(PedidoDtoCadastrar dados, Funcionario funcionario) {
 		this.mesa = dados.mesa();
 		this.comanda = dados.comanda();
 		this.dataHoraPedido = LocalDateTime.now();
+		this.funcionario = funcionario;
 	}
 
 	public Pedido() {
+		super();
 	}
-	
+
 	public Long getId() {
 		return id;
 	}
@@ -74,6 +85,14 @@ public class Pedido {
 		this.comanda = comanda;
 	}
 
+	public LocalDateTime getDataHoraPedido() {
+		return dataHoraPedido;
+	}
+
+	public void setDataHoraPedido(LocalDateTime dataHoraPedido) {
+		this.dataHoraPedido = dataHoraPedido;
+	}
+
 	public List<ItemPedido> getItensPedido() {
 		return itensPedido;
 	}
@@ -82,12 +101,12 @@ public class Pedido {
 		this.itensPedido = itensPedido;
 	}
 
-	public LocalDateTime getDataHoraPedido() {
-		return dataHoraPedido;
+	public Funcionario getFuncionario() {
+		return funcionario;
 	}
 
-	public void setDataHoraPedido(LocalDateTime dataHoraPedido) {
-		this.dataHoraPedido = dataHoraPedido;
+	public void setFuncionario(Funcionario funcionario) {
+		this.funcionario = funcionario;
 	}
 	
 }

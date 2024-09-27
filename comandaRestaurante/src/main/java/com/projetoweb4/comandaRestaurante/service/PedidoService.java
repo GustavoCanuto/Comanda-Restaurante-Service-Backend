@@ -31,7 +31,7 @@ public class PedidoService implements CrudService<PedidoDtoDetalhar, PedidoDtoCa
 	@Override
 	public PedidoDtoDetalhar cadastrar(PedidoDtoCadastrar dados) {
 
-		Pedido pedido = new Pedido(dados); 
+		Pedido pedido = new Pedido(dados, null); 
 
 		repository.save(pedido);
 

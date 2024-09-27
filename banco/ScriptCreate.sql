@@ -1,6 +1,7 @@
 CREATE TABLE tb_dom_status(
     id smallint PRIMARY KEY,
     status char NOT NULL
+   -- descricao VARCHAR(255) NOT NULL
 );
 
 CREATE TABLE tb_dom_cargo_funcionario (
@@ -75,3 +76,13 @@ insert into tb_dom_tipo_produto(id,nome) values
 (1, 'Prato'),
 (2, 'Bebida'),
 (3, 'Sobremesa');
+
+insert into tb_dom_cargo_funcionario(id,cargo,descricao) values
+(1, 'Cozinheiro', "Prepara pratos e sobremesas"),
+(2, 'Garçon', "Serve pratos, sobremesas e bebidas"),
+(3, 'Gerente', "Gerenecia Cozinheiro e Garçon");
+
+insert into tb_dom_status(id,status) values
+(1, 'A'),
+(2, 'F'),
+(3, 'P');
