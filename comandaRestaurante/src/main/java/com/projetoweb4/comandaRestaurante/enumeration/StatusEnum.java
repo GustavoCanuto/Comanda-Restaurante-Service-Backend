@@ -6,7 +6,8 @@ public enum StatusEnum implements EnumBase{
 
  	A_FAZER((short) 1, 'A'),
  	FAZENDO((short) 2, 'F'), 
-    PRONTO((short) 3, 'P');
+    PRONTO((short) 3, 'P'),
+    ENTREGUE((short) 4, 'E');
 	
 	private final Short id;
     private final char status;

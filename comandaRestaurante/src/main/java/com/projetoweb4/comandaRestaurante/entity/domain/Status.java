@@ -12,13 +12,18 @@ public class Status {
 	private Short id;
 	
 	private char status;
+	
+	private String descricao;
 
-	public Status(Short id, char status) {
+	public Status(Short id, char status, String descricao) {
+		super();
 		this.id = id;
 		this.status = status;
+		this.descricao = descricao;
 	}
 
 	public Status() {
+		super();
 	}
 
 	public Short getId() {
@@ -36,5 +41,13 @@ public class Status {
 	public void setStatus(char status) {
 		this.status = status;
 	}
-	
+
+	public String getDescricao() {
+		return descricao;
+	}
+
+	public void setDescricao(String descricao) {
+		this.descricao = descricao;
+	}
+
 }

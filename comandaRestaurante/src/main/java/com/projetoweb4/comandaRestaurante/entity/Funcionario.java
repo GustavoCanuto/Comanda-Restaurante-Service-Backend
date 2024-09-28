@@ -18,16 +18,19 @@ public class Funcionario {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	
-	private String descricao;
+	private String nome;
+	
+	private String cpf;
 	
 	@ManyToOne
     @JoinColumn(name = "fk_cargo_funcionario")
     private CargoFuncionario cargoFuncionario;
 
-	public Funcionario(Long id, String descricao, CargoFuncionario cargoFuncionario) {
+	public Funcionario(Long id, String nome, String cpf, CargoFuncionario cargoFuncionario) {
 		super();
 		this.id = id;
-		this.descricao = descricao;
+		this.nome = nome;
+		this.cpf = cpf;
 		this.cargoFuncionario = cargoFuncionario;
 	}
 
@@ -43,12 +46,20 @@ public class Funcionario {
 		this.id = id;
 	}
 
-	public String getDescricao() {
-		return descricao;
+	public String getNome() {
+		return nome;
 	}
 
-	public void setDescricao(String descricao) {
-		this.descricao = descricao;
+	public void setNome(String nome) {
+		this.nome = nome;
+	}
+
+	public String getCpf() {
+		return cpf;
+	}
+
+	public void setCpf(String cpf) {
+		this.cpf = cpf;
 	}
 
 	public CargoFuncionario getCargoFuncionario() {
@@ -58,5 +69,5 @@ public class Funcionario {
 	public void setCargoFuncionario(CargoFuncionario cargoFuncionario) {
 		this.cargoFuncionario = cargoFuncionario;
 	}
-	
+
 }
