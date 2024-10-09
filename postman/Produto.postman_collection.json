@@ -28,7 +28,7 @@
 						{
 							"key": "imagem",
 							"type": "file",
-							"src": "/C:/Users/Gustavo/Pictures/Screenshots/Screenshot 2024-08-13 183711.png"
+							"src": "postman-cloud:///1ef6a488-f662-43c0-8bcc-f3c91afbda93"
 						},
 						{
 							"key": "tipoProduto",
@@ -37,7 +37,7 @@
 						},
 						{
 							"key": "nome",
-							"value": "teste2",
+							"value": "teste3",
 							"type": "text"
 						}
 					]

@@ -26,6 +26,46 @@
 				}
 			},
 			"response": []
+		},
+		{
+			"name": "Listar Cargo Funcionario",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/dominio/cargo-funcionario",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"dominio",
+						"cargo-funcionario"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Listar Status",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/dominio/status",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"dominio",
+						"status"
+					]
+				}
+			},
+			"response": []
 		}
 	]
 }

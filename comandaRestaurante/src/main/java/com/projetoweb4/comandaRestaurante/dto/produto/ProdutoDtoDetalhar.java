@@ -1,7 +1,7 @@
 package com.projetoweb4.comandaRestaurante.dto.produto;
 
+import com.projetoweb4.comandaRestaurante.dto.domain.TipoProdutoDtoDetalhar;
 import com.projetoweb4.comandaRestaurante.entity.Produto;
-import com.projetoweb4.comandaRestaurante.entity.domain.TipoProduto;
 
 public record ProdutoDtoDetalhar(
 		Long id,
@@ -9,12 +9,12 @@ public record ProdutoDtoDetalhar(
 		String descricao,
 		Double preco,
 		String linkImagem,
-		TipoProduto tipoProduto
+		TipoProdutoDtoDetalhar tipoProduto
 		) {
 
 	public ProdutoDtoDetalhar(Produto entidade) {
 		this(entidade.getId(), entidade.getNome(), entidade.getDescricao(),
-				entidade.getPreco(), entidade.getLinkImagem(), entidade.getTipoProduto());
+				entidade.getPreco(), entidade.getLinkImagem(), new TipoProdutoDtoDetalhar(entidade.getTipoProduto()));
 	}
 
 }

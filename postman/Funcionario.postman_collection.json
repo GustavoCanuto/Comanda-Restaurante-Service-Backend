@@ -1,20 +1,20 @@
 {
 	"info": {
-		"_postman_id": "a832ec8f-2eac-42d2-8b36-b102ce75bd64",
-		"name": "ItemPedido",
+		"_postman_id": "6f66c485-79d3-4bd0-b173-14b9772837a8",
+		"name": "Funcionario",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
 		"_exporter_id": "29089140",
-		"_collection_link": "https://crimson-spaceship-325926.postman.co/workspace/comandaRestaurante~7a14a773-3a23-4f76-8361-b5f48416e023/collection/29089140-a832ec8f-2eac-42d2-8b36-b102ce75bd64?action=share&source=collection_link&creator=29089140"
+		"_collection_link": "https://crimson-spaceship-325926.postman.co/workspace/comandaRestaurante~7a14a773-3a23-4f76-8361-b5f48416e023/collection/29089140-6f66c485-79d3-4bd0-b173-14b9772837a8?action=share&source=collection_link&creator=29089140"
 	},
 	"item": [
 		{
-			"name": "Cadastrar Item Pedido",
+			"name": "Cadastrar Funcionario",
 			"request": {
 				"method": "POST",
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "  {\r\n      \"observacoes\": \"Com cebola\",\r\n      \"idProduto\": 1,\r\n      \"idPedido\": 7\r\n}",
+					"raw": "{\r\n  \"nome\": \"gustavo\",\r\n  \"cpf\": \"111.222.333-22\",\r\n  \"cargoFuncionario\": \"COZINHEIRO\"\r\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -22,21 +22,21 @@
 					}
 				},
 				"url": {
-					"raw": "http://localhost:8080/item-pedido",
+					"raw": "http://localhost:8080/funcionario",
 					"protocol": "http",
 					"host": [
 						"localhost"
 					],
 					"port": "8080",
 					"path": [
-						"item-pedido"
+						"funcionario"
 					]
 				}
 			},
 			"response": []
 		},
 		{
-			"name": "Listar todos Itens Pedido",
+			"name": "Listar todos Funcionario",
 			"protocolProfileBehavior": {
 				"disableBodyPruning": true
 			},
@@ -53,21 +53,21 @@
 					}
 				},
 				"url": {
-					"raw": "http://localhost:8080/item-pedido",
+					"raw": "http://localhost:8080/funcionario",
 					"protocol": "http",
 					"host": [
 						"localhost"
 					],
 					"port": "8080",
 					"path": [
-						"item-pedido"
+						"funcionario"
 					]
 				}
 			},
 			"response": []
 		},
 		{
-			"name": "Detahar Item Pedido",
+			"name": "Detahar Funcionario",
 			"protocolProfileBehavior": {
 				"disableBodyPruning": true
 			},
@@ -84,22 +84,22 @@
 					}
 				},
 				"url": {
-					"raw": "http://localhost:8080/item-pedido/3",
+					"raw": "http://localhost:8080/funcionario/4",
 					"protocol": "http",
 					"host": [
 						"localhost"
 					],
 					"port": "8080",
 					"path": [
-						"item-pedido",
-						"3"
+						"funcionario",
+						"4"
 					]
 				}
 			},
 			"response": []
 		},
 		{
-			"name": "Deletar Item Pedido",
+			"name": "Deletar Funcionario",
 			"request": {
 				"method": "DELETE",
 				"header": [],
@@ -113,15 +113,14 @@
 					}
 				},
 				"url": {
-					"raw": "http://localhost:8080/item-pedido/3",
+					"raw": "http://localhost:8080/funcionario",
 					"protocol": "http",
 					"host": [
 						"localhost"
 					],
 					"port": "8080",
 					"path": [
-						"item-pedido",
-						"3"
+						"funcionario"
 					]
 				}
 			},

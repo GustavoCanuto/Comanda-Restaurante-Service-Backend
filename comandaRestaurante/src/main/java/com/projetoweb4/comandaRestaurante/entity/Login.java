@@ -1,5 +1,7 @@
 package com.projetoweb4.comandaRestaurante.entity;
 
+import com.projetoweb4.comandaRestaurante.dto.login.LoginDtoCadastrar;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -33,6 +35,12 @@ public class Login {
 
 	public Login() {
 		super();
+	}
+
+	public Login(LoginDtoCadastrar dados, Funcionario funcionario) {
+		this.email = dados.email();
+		this.senha = dados.senha();
+		this.funcionario = funcionario;
 	}
 
 	public Long getId() {

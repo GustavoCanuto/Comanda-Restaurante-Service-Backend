@@ -10,11 +10,14 @@ import org.springframework.stereotype.Service;
 
 import com.projetoweb4.comandaRestaurante.dto.pedido.PedidoDtoCadastrar;
 import com.projetoweb4.comandaRestaurante.dto.pedido.PedidoDtoDetalhar;
+import com.projetoweb4.comandaRestaurante.entity.ControleStatusItemPedido;
 import com.projetoweb4.comandaRestaurante.entity.ItemPedido;
 import com.projetoweb4.comandaRestaurante.entity.Pedido;
+import com.projetoweb4.comandaRestaurante.enumeration.StatusEnum;
 import com.projetoweb4.comandaRestaurante.repository.ItemPedidoRepository;
 import com.projetoweb4.comandaRestaurante.repository.PedidoRepository;
 import com.projetoweb4.comandaRestaurante.service.buscador.BuscarProduto;
+import com.projetoweb4.comandaRestaurante.service.buscador.BuscarStatus;
 
 @Service
 public class PedidoService implements CrudService<PedidoDtoDetalhar, PedidoDtoCadastrar, Long>{
@@ -28,6 +31,9 @@ public class PedidoService implements CrudService<PedidoDtoDetalhar, PedidoDtoCa
 	@Autowired
 	private BuscarProduto getProduto;
 
+	@Autowired
+	private BuscarStatus getStatus;
+	
 	@Override
 	public PedidoDtoDetalhar cadastrar(PedidoDtoCadastrar dados) {
 
@@ -36,7 +42,13 @@ public class PedidoService implements CrudService<PedidoDtoDetalhar, PedidoDtoCa
 		repository.save(pedido);
 
 		List<ItemPedido> itensPedido = dados.itensPedido().stream()
-			    .map(itemDto -> new ItemPedido(itemDto, pedido, getProduto.buscar(itemDto.idProduto())))
+			    .map(itemDto -> new ItemPedido(
+			    		itemDto.observacoes(),
+			    		pedido, 
+			    		getProduto.buscar(itemDto.idProduto()),
+			    		new ControleStatusItemPedido(getStatus.buscar(StatusEnum.A_FAZER.getId()))
+			    		)
+			    	)
 			    .collect(Collectors.toList());
   
         itemPedidoRepository.saveAll(itensPedido);

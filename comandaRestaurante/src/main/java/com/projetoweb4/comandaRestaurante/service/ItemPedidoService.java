@@ -9,12 +9,15 @@ import org.springframework.stereotype.Service;
 
 import com.projetoweb4.comandaRestaurante.dto.itemPedido.ItemPedidoDtoCadastrar;
 import com.projetoweb4.comandaRestaurante.dto.itemPedido.ItemPedidoDtoDetalhar;
+import com.projetoweb4.comandaRestaurante.entity.ControleStatusItemPedido;
 import com.projetoweb4.comandaRestaurante.entity.ItemPedido;
 import com.projetoweb4.comandaRestaurante.entity.Pedido;
 import com.projetoweb4.comandaRestaurante.entity.Produto;
+import com.projetoweb4.comandaRestaurante.enumeration.StatusEnum;
 import com.projetoweb4.comandaRestaurante.repository.ItemPedidoRepository;
 import com.projetoweb4.comandaRestaurante.service.buscador.BuscarPedido;
 import com.projetoweb4.comandaRestaurante.service.buscador.BuscarProduto;
+import com.projetoweb4.comandaRestaurante.service.buscador.BuscarStatus;
 import com.projetoweb4.comandaRestaurante.validacoes.ValidacaoException;
 
 @Service
@@ -28,6 +31,9 @@ public class ItemPedidoService implements CrudService<ItemPedidoDtoDetalhar, Ite
 	
 	@Autowired
 	private BuscarPedido getPedido;
+	
+	@Autowired
+	private BuscarStatus getStatus;
 
 	@Override
 	public ItemPedidoDtoDetalhar cadastrar(ItemPedidoDtoCadastrar dados) {
@@ -37,7 +43,7 @@ public class ItemPedidoService implements CrudService<ItemPedidoDtoDetalhar, Ite
 		Pedido pedido = ofNullable(getPedido.buscar(dados.idPedido()))
 			    .orElseThrow(() -> new ValidacaoException("É obrigatório informar o id do Pedido"));
 		
-		ItemPedido itemPedido = new ItemPedido(dados, pedido, produto); 
+		ItemPedido itemPedido = new ItemPedido(dados.observacoes(), pedido, produto,new ControleStatusItemPedido(getStatus.buscar(StatusEnum.A_FAZER.getId()))); 
 
 		repository.save(itemPedido);
 

@@ -1,5 +1,6 @@
 package com.projetoweb4.comandaRestaurante.entity;
 
+import com.projetoweb4.comandaRestaurante.dto.funcionario.FuncionarioDtoCadastrar;
 import com.projetoweb4.comandaRestaurante.entity.domain.CargoFuncionario;
 
 import jakarta.persistence.Entity;
@@ -36,6 +37,12 @@ public class Funcionario {
 
 	public Funcionario() {
 		super();
+	}
+
+	public Funcionario(FuncionarioDtoCadastrar dados, CargoFuncionario cargoFuncionario) {
+		this.nome = dados.nome();
+		this.cpf = dados.cpf();
+		this.cargoFuncionario = cargoFuncionario;
 	}
 
 	public Long getId() {

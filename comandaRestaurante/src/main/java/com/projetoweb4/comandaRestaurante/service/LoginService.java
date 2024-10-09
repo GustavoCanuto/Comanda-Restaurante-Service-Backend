@@ -1,59 +1,43 @@
 package com.projetoweb4.comandaRestaurante.service;
 
-import java.util.List;
-import java.util.stream.Collectors;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
-import com.projetoweb4.comandaRestaurante.dto.pedido.PedidoDtoCadastrar;
-import com.projetoweb4.comandaRestaurante.dto.pedido.PedidoDtoDetalhar;
-import com.projetoweb4.comandaRestaurante.entity.ItemPedido;
-import com.projetoweb4.comandaRestaurante.entity.Pedido;
-import com.projetoweb4.comandaRestaurante.repository.ItemPedidoRepository;
-import com.projetoweb4.comandaRestaurante.repository.PedidoRepository;
-import com.projetoweb4.comandaRestaurante.service.buscador.BuscarProduto;
+import com.projetoweb4.comandaRestaurante.dto.login.LoginDtoCadastrar;
+import com.projetoweb4.comandaRestaurante.dto.login.LoginDtoDetalhar;
+import com.projetoweb4.comandaRestaurante.entity.Login;
+import com.projetoweb4.comandaRestaurante.repository.LoginRepository;
+import com.projetoweb4.comandaRestaurante.service.buscador.BuscarFuncionario;
 
 @Service
-public class LoginService implements CrudService<PedidoDtoDetalhar, PedidoDtoCadastrar, Long>{
+public class LoginService implements CrudService<LoginDtoDetalhar, LoginDtoCadastrar, Long>{
 
 	@Autowired
-	private PedidoRepository repository;
+	private LoginRepository repository;
 	
 	@Autowired
-	private ItemPedidoRepository itemPedidoRepository;
-	
-	@Autowired
-	private BuscarProduto getProduto;
+	private BuscarFuncionario getFuncionario;
 
 	@Override
-	public PedidoDtoDetalhar cadastrar(PedidoDtoCadastrar dados) {
+	public LoginDtoDetalhar cadastrar(LoginDtoCadastrar dados) {
 
-		Pedido pedido = new Pedido(dados, null); 
+		Login login = new Login(dados, getFuncionario.buscar(dados.idFuncionario()));
 
-		repository.save(pedido);
+		repository.save(login);
 
-		List<ItemPedido> itensPedido = dados.itensPedido().stream()
-			    .map(itemDto -> new ItemPedido(itemDto, pedido, getProduto.buscar(itemDto.idProduto())))
-			    .collect(Collectors.toList());
-  
-        itemPedidoRepository.saveAll(itensPedido);
-           
-        pedido.setItensPedido(itensPedido);
-        
-		return new PedidoDtoDetalhar(pedido);
+		return new LoginDtoDetalhar(login);
 	}
 
 	@Override
-	public PedidoDtoDetalhar buscarPorId(Long id) {
-		return new PedidoDtoDetalhar(repository.getReferenceById(id));
+	public LoginDtoDetalhar buscarPorId(Long id) {
+		return new LoginDtoDetalhar(repository.getReferenceById(id));
 	}
 
 	@Override
-	public Page<PedidoDtoDetalhar> listarTodos(Pageable paginacao) {
-		return repository.findAll(paginacao).map(PedidoDtoDetalhar::new);
+	public Page<LoginDtoDetalhar> listarTodos(Pageable paginacao) {
+		return repository.findAll(paginacao).map(LoginDtoDetalhar::new);
 	}
 
 	@Override
@@ -62,7 +46,7 @@ public class LoginService implements CrudService<PedidoDtoDetalhar, PedidoDtoCad
 	}
 
 	@Override
-	public PedidoDtoDetalhar atualizar(PedidoDtoCadastrar dados, Long id) {
+	public LoginDtoDetalhar atualizar(LoginDtoCadastrar dados, Long id) {
 		// TODO Auto-generated method stub
 		return null;
 	}

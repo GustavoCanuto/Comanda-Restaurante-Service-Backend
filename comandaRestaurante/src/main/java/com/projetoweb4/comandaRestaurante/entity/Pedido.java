@@ -28,6 +28,7 @@ public class Pedido {
 	
 	private Integer mesa;
 	private String comanda;
+
 	@Column(name = "data_hora_pedido", updatable = false, columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
 	private LocalDateTime dataHoraPedido;
 	

@@ -44,22 +44,24 @@ CREATE TABLE tb_pedido (
 
 CREATE TABLE tb_item_pedido (
     id INT PRIMARY KEY AUTO_INCREMENT,
-    quantidade INT NOT NULL,
     observacao TEXT,
     fk_pedido INT NOT NULL,
     fk_produto INT NOT NULL,
+    fk_controle_status_item_pedido INT NOT NULL,
     FOREIGN KEY (fk_pedido) REFERENCES tb_pedido(id),
-    FOREIGN KEY (fk_produto) REFERENCES  tb_produto(id)
+    FOREIGN KEY (fk_produto) REFERENCES  tb_produto(id),
+    FOREIGN KEY (fk_controle_status_item_pedido) REFERENCES tb_controle_status_item_pedido(id)
 );
 
-CREATE TABLE tb_status_pedido (
+CREATE TABLE tb_controle_status_item_pedido (
     id INT PRIMARY KEY AUTO_INCREMENT,
     descricao_status VARCHAR(50),
+    data_hora_iniciado TIMESTAMP,
+    data_hora_pronto TIMESTAMP,
+    data_hora_entregue TIMESTAMP,
     fk_funcionario INT,
-    fk_pedido INT NOT NULL,
-  	fk_status smallint NOT NULL,
+  	fk_status smallint NOT NULL DEFAULT 1,
     FOREIGN KEY (fk_funcionario) REFERENCES tb_funcionario(id),
-    FOREIGN KEY (fk_pedido) REFERENCES tb_pedido(id),
     FOREIGN KEY (fk_status) REFERENCES tb_dom_status(id)
 );
 
@@ -86,4 +88,5 @@ insert into tb_dom_status(id,status,descricao) values
 (1, 'A','A Fazer'),
 (2, 'F','Fazendo'),
 (3, 'P','Pronto'),
-(4, 'E','Entregue');
+(4, 'E','Entregue'),
+(5, 'C','Cancelado');

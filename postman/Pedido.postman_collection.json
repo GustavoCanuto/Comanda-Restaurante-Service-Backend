@@ -14,7 +14,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n  \"mesa\": 1,\r\n  \"comanda\": \"Comanda 123\",\r\n  \"itensPedido\": [\r\n    {\r\n      \"quantidade\": \"2\",\r\n      \"observacoes\": \"teste\",\r\n      \"idProduto\": 3\r\n    }\r\n  ]\r\n}",
+					"raw": "{\r\n  \"mesa\": 1,\r\n  \"comanda\": \"Comanda 123\",\r\n  \"itensPedido\": [\r\n    {\r\n      \"observacoes\": \"teste\",\r\n      \"idProduto\": 1\r\n    }\r\n  ]\r\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -84,7 +84,7 @@
 					}
 				},
 				"url": {
-					"raw": "http://localhost:8080/pedido/2",
+					"raw": "http://localhost:8080/pedido/7",
 					"protocol": "http",
 					"host": [
 						"localhost"
@@ -92,7 +92,7 @@
 					"port": "8080",
 					"path": [
 						"pedido",
-						"2"
+						"7"
 					]
 				}
 			},

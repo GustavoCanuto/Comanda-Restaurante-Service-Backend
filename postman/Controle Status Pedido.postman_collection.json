@@ -1,0 +1,40 @@
+{
+	"info": {
+		"_postman_id": "6a94590c-4db6-4cf0-b6f7-246bf2dd813c",
+		"name": "Controle Status Pedido",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "29089140",
+		"_collection_link": "https://crimson-spaceship-325926.postman.co/workspace/comandaRestaurante~7a14a773-3a23-4f76-8361-b5f48416e023/collection/29089140-6a94590c-4db6-4cf0-b6f7-246bf2dd813c?action=share&source=collection_link&creator=29089140"
+	},
+	"item": [
+		{
+			"name": "Cadastrar Status Pedido",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"descricao\": \"teste\",\r\n  \"idFuncionario\": 1,\r\n  \"status\": \"PRONTO\",\r\n  \"itensPedido\": [\r\n    {\r\n      \"idItemPedido\": 1\r\n    }\r\n  ]\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/controle-status-item-pedido/2,3",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"controle-status-item-pedido",
+						"2,3"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

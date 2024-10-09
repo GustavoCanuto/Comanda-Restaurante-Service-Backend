@@ -1,14 +1,15 @@
 package com.projetoweb4.comandaRestaurante.entity;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.projetoweb4.comandaRestaurante.dto.itemPedido.ItemPedidoDtoCadastrar;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 
 @Table(name = "tb_item_pedido")
@@ -19,7 +20,6 @@ public class ItemPedido {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	
-	private Integer quantidade;
 	private String observacao;
 	
 	@ManyToOne
@@ -30,23 +30,30 @@ public class ItemPedido {
 	@ManyToOne
     @JoinColumn(name = "fk_produto")
     private Produto produto;
-
-	public ItemPedido(Long id, Integer quantidade, String observacoes, Pedido pedido, Produto produto) {
-		this.id = id;
-		this.quantidade = quantidade;
-		this.observacao = observacoes;
-		this.pedido = pedido;
-		this.produto = produto;
-	}
-
-	public ItemPedido(ItemPedidoDtoCadastrar dados, Pedido pedido, Produto produto) {
-		this.quantidade = dados.quantidade();
-		this.observacao = dados.observacoes();
-		this.pedido = pedido;
-		this.produto = produto;
-	}
 	
+	@OneToOne(cascade = CascadeType.ALL)
+	@JoinColumn(name = "fk_controle_status_item_pedido")
+    private ControleStatusItemPedido controleStatusItemPedido;
+
+	public ItemPedido(Long id, String observacao, Pedido pedido, Produto produto,
+			ControleStatusItemPedido controleStatusItemPedido) {
+		super();
+		this.id = id;
+		this.observacao = observacao;
+		this.pedido = pedido;
+		this.produto = produto;
+		this.controleStatusItemPedido = controleStatusItemPedido;
+	}
+
 	public ItemPedido() {
+		super();
+	}
+
+	public ItemPedido( String observacao, Pedido pedido, Produto produto, ControleStatusItemPedido controleStatusItemPedido) {
+		this.observacao = observacao;
+		this.pedido = pedido;
+		this.produto = produto;
+		this.controleStatusItemPedido = controleStatusItemPedido;
 	}
 
 	public Long getId() {
@@ -57,20 +64,12 @@ public class ItemPedido {
 		this.id = id;
 	}
 
-	public Integer getQuantidade() {
-		return quantidade;
-	}
-
-	public void setQuantidade(Integer quantidade) {
-		this.quantidade = quantidade;
-	}
-
-	public String getObservacoes() {
+	public String getObservacao() {
 		return observacao;
 	}
 
-	public void setObservacoes(String observacoes) {
-		this.observacao = observacoes;
+	public void setObservacao(String observacao) {
+		this.observacao = observacao;
 	}
 
 	public Pedido getPedido() {
@@ -88,5 +87,13 @@ public class ItemPedido {
 	public void setProduto(Produto produto) {
 		this.produto = produto;
 	}
-	
+
+	public ControleStatusItemPedido getControleStatusItemPedido() {
+		return controleStatusItemPedido;
+	}
+
+	public void setControleStatusItemPedido(ControleStatusItemPedido controleStatusItemPedido) {
+		this.controleStatusItemPedido = controleStatusItemPedido;
+	}
+
 }
