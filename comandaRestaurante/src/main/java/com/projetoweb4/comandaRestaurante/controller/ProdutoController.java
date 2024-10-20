@@ -15,11 +15,13 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.util.UriComponentsBuilder;
 
 import com.projetoweb4.comandaRestaurante.dto.produto.ProdutoDtoCadastrar;
 import com.projetoweb4.comandaRestaurante.dto.produto.ProdutoDtoDetalhar;
+import com.projetoweb4.comandaRestaurante.enumeration.StatusGeralEnum;
 import com.projetoweb4.comandaRestaurante.service.ProdutoService;
 
 import jakarta.transaction.Transactional;
@@ -55,9 +57,11 @@ public class ProdutoController {
 	}
 
 	@GetMapping
-	public ResponseEntity<Page<ProdutoDtoDetalhar>> listar(@PageableDefault(size = 10) Pageable paginacao) {
+	public ResponseEntity<Page<ProdutoDtoDetalhar>> listar(
+			@RequestParam(required = false) StatusGeralEnum statusGeral,
+			@PageableDefault(size = 10) Pageable paginacao) {
 
-		return ResponseEntity.ok(service.listarTodos(paginacao));
+		return ResponseEntity.ok(service.listarTodos(paginacao, statusGeral));
 	}
 
 	@GetMapping("/{id}")

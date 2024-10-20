@@ -56,6 +56,22 @@ public class ItemPedido {
 		this.controleStatusItemPedido = controleStatusItemPedido;
 	}
 
+	public void atualizarInformacoes(String observacao, Pedido pedido, Produto produto) {
+
+		if (observacao != null && !observacao.isBlank()) {
+			this.observacao = observacao;
+		}
+		
+		if (pedido != null) {
+			this.pedido = pedido;
+		}
+		
+		if (produto != null) {
+			this.produto = produto;
+		}
+		
+	}
+
 	public Long getId() {
 		return id;
 	}

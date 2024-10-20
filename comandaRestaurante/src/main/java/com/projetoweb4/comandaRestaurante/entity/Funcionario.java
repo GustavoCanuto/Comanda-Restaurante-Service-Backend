@@ -45,6 +45,22 @@ public class Funcionario {
 		this.cargoFuncionario = cargoFuncionario;
 	}
 
+	public void atualizarInformacoes(FuncionarioDtoCadastrar dados, CargoFuncionario cargoFuncionario) {
+
+		if ( dados.nome() != null && !dados.nome().isBlank()) {
+			this.nome = dados.nome();
+		}
+		
+		if (dados.cpf() != null) {
+			this.cpf = dados.cpf();
+		}
+		
+		if (cargoFuncionario != null) {
+			this.cargoFuncionario = cargoFuncionario;
+		}
+		
+	}
+	
 	public Long getId() {
 		return id;
 	}

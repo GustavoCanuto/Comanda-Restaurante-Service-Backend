@@ -13,7 +13,8 @@ import com.projetoweb4.comandaRestaurante.dto.domain.CargoFuncionarioDtoDetalhar
 import com.projetoweb4.comandaRestaurante.dto.domain.StatusDtoDetalhar;
 import com.projetoweb4.comandaRestaurante.dto.domain.TipoProdutoDtoDetalhar;
 import com.projetoweb4.comandaRestaurante.repository.domain.CargoFuncionarioRepository;
-import com.projetoweb4.comandaRestaurante.repository.domain.StatusRepository;
+import com.projetoweb4.comandaRestaurante.repository.domain.StatusGeralRepository;
+import com.projetoweb4.comandaRestaurante.repository.domain.StatusProcessoRepository;
 import com.projetoweb4.comandaRestaurante.repository.domain.TipoProdutoRepository;
 
 @CrossOrigin(origins = "*", maxAge = 3600)
@@ -28,7 +29,10 @@ public class DomainController {
 	private CargoFuncionarioRepository cargoFuncionarioRepository;
 	
 	@Autowired
-	private StatusRepository statusRepository;
+	private StatusProcessoRepository statusProcessoRepository;
+	
+	@Autowired
+	private StatusGeralRepository statusGeralRepository;
 
 	@GetMapping("tipo-produto")
 	public ResponseEntity<List<TipoProdutoDtoDetalhar>> listarTipoProduto() {
@@ -42,9 +46,15 @@ public class DomainController {
 		return ResponseEntity.ok(cargoFuncionarioRepository.findAll().stream().map(CargoFuncionarioDtoDetalhar::new).toList());
 	}
 	
-	@GetMapping("status")
-	public ResponseEntity<List<StatusDtoDetalhar>> listarStatus() {
+	@GetMapping("statusProcesso")
+	public ResponseEntity<List<StatusDtoDetalhar>> listarStatusProcesso() {
 
-		return ResponseEntity.ok(statusRepository.findAll().stream().map(StatusDtoDetalhar::new).toList());
+		return ResponseEntity.ok(statusProcessoRepository.findAll().stream().map(StatusDtoDetalhar::new).toList());
+	}
+	
+	@GetMapping("statusGeral")
+	public ResponseEntity<List<StatusDtoDetalhar>> listarStatusGeral() {
+
+		return ResponseEntity.ok(statusGeralRepository.findAll().stream().map(StatusDtoDetalhar::new).toList());
 	}
 }

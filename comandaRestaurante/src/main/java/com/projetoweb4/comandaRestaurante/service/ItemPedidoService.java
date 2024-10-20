@@ -2,6 +2,8 @@ package com.projetoweb4.comandaRestaurante.service;
 
 import static java.util.Optional.ofNullable;
 
+import java.util.Objects;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -13,15 +15,17 @@ import com.projetoweb4.comandaRestaurante.entity.ControleStatusItemPedido;
 import com.projetoweb4.comandaRestaurante.entity.ItemPedido;
 import com.projetoweb4.comandaRestaurante.entity.Pedido;
 import com.projetoweb4.comandaRestaurante.entity.Produto;
-import com.projetoweb4.comandaRestaurante.enumeration.StatusEnum;
+import com.projetoweb4.comandaRestaurante.entity.domain.StatusProcesso;
+import com.projetoweb4.comandaRestaurante.enumeration.StatusProcessoEnum;
 import com.projetoweb4.comandaRestaurante.repository.ItemPedidoRepository;
+import com.projetoweb4.comandaRestaurante.service.buscador.BuscarItemPedido;
 import com.projetoweb4.comandaRestaurante.service.buscador.BuscarPedido;
 import com.projetoweb4.comandaRestaurante.service.buscador.BuscarProduto;
-import com.projetoweb4.comandaRestaurante.service.buscador.BuscarStatus;
+import com.projetoweb4.comandaRestaurante.service.buscador.BuscarStatusProcesso;
 import com.projetoweb4.comandaRestaurante.validacoes.ValidacaoException;
 
 @Service
-public class ItemPedidoService implements CrudService<ItemPedidoDtoDetalhar, ItemPedidoDtoCadastrar, Long>{
+public class ItemPedidoService {
 
 	@Autowired
 	private ItemPedidoRepository repository;
@@ -33,9 +37,11 @@ public class ItemPedidoService implements CrudService<ItemPedidoDtoDetalhar, Ite
 	private BuscarPedido getPedido;
 	
 	@Autowired
-	private BuscarStatus getStatus;
+	private BuscarItemPedido getItemPedido;
+	
+	@Autowired
+	private BuscarStatusProcesso getStatusProcesso;
 
-	@Override
 	public ItemPedidoDtoDetalhar cadastrar(ItemPedidoDtoCadastrar dados) {
 	
 		Produto produto = getProduto.buscar(dados.idProduto());
@@ -43,30 +49,45 @@ public class ItemPedidoService implements CrudService<ItemPedidoDtoDetalhar, Ite
 		Pedido pedido = ofNullable(getPedido.buscar(dados.idPedido()))
 			    .orElseThrow(() -> new ValidacaoException("É obrigatório informar o id do Pedido"));
 		
-		ItemPedido itemPedido = new ItemPedido(dados.observacoes(), pedido, produto,new ControleStatusItemPedido(getStatus.buscar(StatusEnum.A_FAZER.getId()))); 
+		ItemPedido itemPedido = new ItemPedido(dados.observacoes(), pedido, produto,new ControleStatusItemPedido(getStatusProcesso.buscar(StatusProcessoEnum.A_FAZER.getId()))); 
 
 		repository.save(itemPedido);
 
 		return new ItemPedidoDtoDetalhar(itemPedido, true);
 	}
 
-	@Override
+
 	public ItemPedidoDtoDetalhar buscarPorId(Long id) {
 		return new ItemPedidoDtoDetalhar(repository.getReferenceById(id), true);
 	}
 
-	@Override
-	public Page<ItemPedidoDtoDetalhar> listarTodos(Pageable paginacao) {
+
+	public Page<ItemPedidoDtoDetalhar> listarTodos(Pageable paginacao, StatusProcessoEnum statusProcesso) {
+		
+		if(!Objects.isNull(statusProcesso)) {
+			
+		StatusProcesso status = getStatusProcesso.buscar(statusProcesso.getId());
+		
+		return repository
+				.findByControleStatusItemPedido_StatusProcesso(status, paginacao)
+				.map(item -> new ItemPedidoDtoDetalhar(item, true));
+				
+		}
+		
 		return repository.findAll(paginacao).map(item -> new ItemPedidoDtoDetalhar(item, true));
 	}
 
-	@Override
+
 	public void deletar(Long id) {
-		repository.deleteById(id);
+		
+		ItemPedido itemPedido = getItemPedido.buscar(id);
+		itemPedido.getControleStatusItemPedido().setStatus(getStatusProcesso.buscar(StatusProcessoEnum.CANCELADO.getId()));
+		
+		repository.save(itemPedido);
 		
 	}
 
-	@Override
+
 	public ItemPedidoDtoDetalhar atualizar(ItemPedidoDtoCadastrar dados, Long id) {
 		// TODO Auto-generated method stub
 		return null;

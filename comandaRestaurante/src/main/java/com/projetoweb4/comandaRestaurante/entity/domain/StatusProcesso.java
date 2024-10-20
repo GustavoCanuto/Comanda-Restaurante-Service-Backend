@@ -4,9 +4,9 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 
-@Table(name = "tb_dom_status")
-@Entity(name = "Status")
-public class Status {
+@Table(name = "tb_dom_status_processo")
+@Entity(name = "StatusProcesso")
+public class StatusProcesso {
 
 	@Id
 	private Short id;
@@ -15,14 +15,14 @@ public class Status {
 	
 	private String descricao;
 
-	public Status(Short id, char status, String descricao) {
+	public StatusProcesso(Short id, char status, String descricao) {
 		super();
 		this.id = id;
 		this.status = status;
 		this.descricao = descricao;
 	}
 
-	public Status() {
+	public StatusProcesso() {
 		super();
 	}
 

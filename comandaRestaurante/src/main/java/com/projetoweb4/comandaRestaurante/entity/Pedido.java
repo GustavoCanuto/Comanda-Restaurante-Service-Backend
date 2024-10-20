@@ -58,6 +58,22 @@ public class Pedido {
 		this.funcionario = funcionario;
 	}
 
+	public void atualizarInformacoes(PedidoDtoCadastrar dados, Funcionario funcionario) {
+
+		if (dados.mesa() != null) {
+			this.mesa = dados.mesa();
+		}
+		
+		if (dados.comanda() != null && !dados.comanda().isBlank()) {
+			this.comanda = dados.comanda();
+		}
+		
+		if (funcionario != null) {
+			this.funcionario = funcionario;
+		}
+		
+	}
+	
 	public Pedido() {
 		super();
 	}

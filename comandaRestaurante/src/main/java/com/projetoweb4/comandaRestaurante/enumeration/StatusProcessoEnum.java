@@ -2,17 +2,18 @@ package com.projetoweb4.comandaRestaurante.enumeration;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 
-public enum StatusEnum implements EnumBase{
+public enum StatusProcessoEnum implements EnumBase{
 
  	A_FAZER((short) 1, 'A'),
  	FAZENDO((short) 2, 'F'), 
     PRONTO((short) 3, 'P'),
-    ENTREGUE((short) 4, 'E');
+    ENTREGUE((short) 4, 'E'),
+    CANCELADO((short) 5, 'C');
 	
 	private final Short id;
     private final char status;
     
-    StatusEnum(Short id, char status) {
+    StatusProcessoEnum(Short id, char status) {
         this.id = id;
         this.status = status;
     }
@@ -31,8 +32,8 @@ public enum StatusEnum implements EnumBase{
     }
     
 	@JsonCreator
-	public static StatusEnum fromString(String valor) {
-		return EnumBase.fromString(StatusEnum.class, valor);
+	public static StatusProcessoEnum fromString(String valor) {
+		return EnumBase.fromString(StatusProcessoEnum.class, valor);
 	}
 }
 

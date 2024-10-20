@@ -1,6 +1,6 @@
 package com.projetoweb4.comandaRestaurante.dto.statusItemPedido;
 
-import com.projetoweb4.comandaRestaurante.enumeration.StatusEnum;
+import com.projetoweb4.comandaRestaurante.enumeration.StatusProcessoEnum;
 
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
@@ -15,7 +15,7 @@ public record ControleStatusItemPedidoDtoUpdate(
 		Long idFuncionario,//buscar automatico pelo login depois
 		@NotNull
 		@Enumerated(EnumType.STRING)
-        StatusEnum status
+        StatusProcessoEnum status
 		) {
 
 }

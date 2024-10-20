@@ -8,7 +8,6 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -44,14 +43,6 @@ public class FuncionarioController {
 		return ResponseEntity.created(uri).body(entidade);
 	}
 
-	@DeleteMapping("/{id}")
-	@Transactional
-	public ResponseEntity<Void> excluir(@PathVariable Long id) {
-		
-		service.deletar(id);
-
-		return ResponseEntity.noContent().build();
-	}
 
 	@GetMapping
 	public ResponseEntity<Page<FuncionarioDtoDetalhar>> listar(@PageableDefault(size = 10) Pageable paginacao) {

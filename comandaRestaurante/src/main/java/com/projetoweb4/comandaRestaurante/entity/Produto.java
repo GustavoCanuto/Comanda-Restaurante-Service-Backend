@@ -1,6 +1,7 @@
 package com.projetoweb4.comandaRestaurante.entity;
 
 import com.projetoweb4.comandaRestaurante.dto.produto.ProdutoDtoCadastrar;
+import com.projetoweb4.comandaRestaurante.entity.domain.StatusGeral;
 import com.projetoweb4.comandaRestaurante.entity.domain.TipoProduto;
 
 import jakarta.persistence.Entity;
@@ -27,27 +28,61 @@ public class Produto {
 	@ManyToOne
     @JoinColumn(name = "fk_tipo_produto")
     private TipoProduto tipoProduto;
+	
+	@ManyToOne
+    @JoinColumn(name = "fk_status_geral")
+    private StatusGeral statusGeral;
 
 	public Produto() {	
 	}
 	
-	public Produto(Long id, String nome, String descricao, Double preco, String linkImagem, TipoProduto tipoProduto) {
+	public Produto(Long id, String nome, String descricao, Double preco, String linkImagem, TipoProduto tipoProduto, StatusGeral statusGeral) {
 		this.id = id;
 		this.nome = nome;
 		this.descricao = descricao;
 		this.preco = preco;
 		this.linkImagem = linkImagem;
 		this.tipoProduto = tipoProduto;
+		this.statusGeral = statusGeral;
 	}
 
-	public Produto(ProdutoDtoCadastrar dados, TipoProduto tipoProduto, String linkImagem) {
+	public Produto(ProdutoDtoCadastrar dados, TipoProduto tipoProduto, String linkImagem, StatusGeral statusGeral) {
 		this.nome = dados.nome();
 		this.descricao = dados.descricao();
 		this.preco = dados.preco();
 		this.linkImagem = linkImagem;
 		this.tipoProduto = tipoProduto;
+		this.statusGeral = statusGeral;
 	}
 
+	public void atualizarInformacoes(ProdutoDtoCadastrar dados, TipoProduto tipoProduto, String linkImagem, StatusGeral statusGeral) {
+
+		if (dados.nome() != null && !dados.nome().isBlank()) {
+			this.nome = dados.nome();
+		}
+		
+		if (dados.descricao() != null && !dados.descricao().isBlank()) {
+			this.descricao = dados.descricao();
+		}
+		
+		if (dados.preco() != null) {
+			this.preco = dados.preco();
+		}
+		
+		if (linkImagem != null && !linkImagem.isBlank()) {
+			this.linkImagem = linkImagem;
+		}
+		
+		if (tipoProduto != null) {
+			this.tipoProduto = tipoProduto;
+		}
+		
+		if (statusGeral != null) {
+			this.statusGeral = statusGeral;
+		}
+
+	}
+	
 	public Long getId() {
 		return id;
 	}
@@ -96,4 +131,13 @@ public class Produto {
 		this.tipoProduto = tipoProduto;
 	}
 
+	public StatusGeral getStatusGeral() {
+		return statusGeral;
+	}
+
+	public void setStatusGeral(StatusGeral statusGeral) {
+		this.statusGeral = statusGeral;
+	}
+
+	
 }

@@ -1,6 +1,7 @@
 package com.projetoweb4.comandaRestaurante.service;
 
 import java.util.List;
+import java.util.Objects;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,14 +14,16 @@ import com.projetoweb4.comandaRestaurante.dto.pedido.PedidoDtoDetalhar;
 import com.projetoweb4.comandaRestaurante.entity.ControleStatusItemPedido;
 import com.projetoweb4.comandaRestaurante.entity.ItemPedido;
 import com.projetoweb4.comandaRestaurante.entity.Pedido;
-import com.projetoweb4.comandaRestaurante.enumeration.StatusEnum;
+import com.projetoweb4.comandaRestaurante.entity.domain.StatusProcesso;
+import com.projetoweb4.comandaRestaurante.enumeration.StatusProcessoEnum;
 import com.projetoweb4.comandaRestaurante.repository.ItemPedidoRepository;
 import com.projetoweb4.comandaRestaurante.repository.PedidoRepository;
+import com.projetoweb4.comandaRestaurante.service.buscador.BuscarPedido;
 import com.projetoweb4.comandaRestaurante.service.buscador.BuscarProduto;
-import com.projetoweb4.comandaRestaurante.service.buscador.BuscarStatus;
+import com.projetoweb4.comandaRestaurante.service.buscador.BuscarStatusProcesso;
 
 @Service
-public class PedidoService implements CrudService<PedidoDtoDetalhar, PedidoDtoCadastrar, Long>{
+public class PedidoService{
 
 	@Autowired
 	private PedidoRepository repository;
@@ -32,9 +35,11 @@ public class PedidoService implements CrudService<PedidoDtoDetalhar, PedidoDtoCa
 	private BuscarProduto getProduto;
 
 	@Autowired
-	private BuscarStatus getStatus;
+	private BuscarStatusProcesso getStatusProcesso;
 	
-	@Override
+	@Autowired
+	private BuscarPedido getPedido;
+	
 	public PedidoDtoDetalhar cadastrar(PedidoDtoCadastrar dados) {
 
 		Pedido pedido = new Pedido(dados, null); 
@@ -46,7 +51,7 @@ public class PedidoService implements CrudService<PedidoDtoDetalhar, PedidoDtoCa
 			    		itemDto.observacoes(),
 			    		pedido, 
 			    		getProduto.buscar(itemDto.idProduto()),
-			    		new ControleStatusItemPedido(getStatus.buscar(StatusEnum.A_FAZER.getId()))
+			    		new ControleStatusItemPedido(getStatusProcesso.buscar(StatusProcessoEnum.A_FAZER.getId()))
 			    		)
 			    	)
 			    .collect(Collectors.toList());
@@ -58,22 +63,42 @@ public class PedidoService implements CrudService<PedidoDtoDetalhar, PedidoDtoCa
 		return new PedidoDtoDetalhar(pedido);
 	}
 
-	@Override
+
 	public PedidoDtoDetalhar buscarPorId(Long id) {
 		return new PedidoDtoDetalhar(repository.getReferenceById(id));
 	}
 
-	@Override
-	public Page<PedidoDtoDetalhar> listarTodos(Pageable paginacao) {
+
+	public Page<PedidoDtoDetalhar> listarTodos(Pageable paginacao, StatusProcessoEnum statusProcesso) {
+		//ele vai fazer um findAll nos pedidos porém só vai retornar o pedido se algum itemPedido tiver o idstatusProcesso mandado
+		if(!Objects.isNull(statusProcesso)) {
+			
+		StatusProcesso status = getStatusProcesso.buscar(statusProcesso.getId());
+		
+		return repository
+				.findByItensPedido_ControleStatusItemPedido_StatusProcesso(status, paginacao)
+				.map(PedidoDtoDetalhar::new);
+				
+		}
+
 		return repository.findAll(paginacao).map(PedidoDtoDetalhar::new);
 	}
 
-	@Override
+
 	public void deletar(Long id) {
-		repository.deleteById(id);
+		//faz loop nos items e muda o status para cancelado
+		Pedido pedido = getPedido.buscar(id);
+		
+		List<ItemPedido> itensPedido = pedido.getItensPedido().stream()
+			    .peek(itemDto -> itemDto.setControleStatusItemPedido(
+			        new ControleStatusItemPedido(getStatusProcesso.buscar(StatusProcessoEnum.CANCELADO.getId()))
+			    ))
+			    .collect(Collectors.toList());
+  
+        itemPedidoRepository.saveAll(itensPedido);
 	}
 
-	@Override
+	
 	public PedidoDtoDetalhar atualizar(PedidoDtoCadastrar dados, Long id) {
 		// TODO Auto-generated method stub
 		return null;

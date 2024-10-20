@@ -14,11 +14,11 @@ import com.projetoweb4.comandaRestaurante.dto.itemPedido.ItemPedidoDtoDetalhar;
 import com.projetoweb4.comandaRestaurante.dto.statusItemPedido.ControleStatusItemPedidoDtoUpdate;
 import com.projetoweb4.comandaRestaurante.entity.ControleStatusItemPedido;
 import com.projetoweb4.comandaRestaurante.entity.ItemPedido;
-import com.projetoweb4.comandaRestaurante.enumeration.StatusEnum;
+import com.projetoweb4.comandaRestaurante.enumeration.StatusProcessoEnum;
 import com.projetoweb4.comandaRestaurante.repository.StatusPedidoRepository;
 import com.projetoweb4.comandaRestaurante.service.buscador.BuscarFuncionario;
 import com.projetoweb4.comandaRestaurante.service.buscador.BuscarItemPedido;
-import com.projetoweb4.comandaRestaurante.service.buscador.BuscarStatus;
+import com.projetoweb4.comandaRestaurante.service.buscador.BuscarStatusProcesso;
 
 @Service
 public class ControleStatusItemPedidoService {
@@ -27,7 +27,7 @@ public class ControleStatusItemPedidoService {
 	private StatusPedidoRepository repository;
 	
 	@Autowired
-	private BuscarStatus getStatus;
+	private BuscarStatusProcesso getStatus;
 	
 	@Autowired
 	private BuscarItemPedido getItemPedido;
@@ -36,6 +36,8 @@ public class ControleStatusItemPedidoService {
 	private BuscarFuncionario getFuncionario;
 
 	public Page<ItemPedidoDtoDetalhar> atualizar(List<Long> idsItemPedido ,ControleStatusItemPedidoDtoUpdate dados, Pageable paginacao) {
+		
+		//funcionario pegar do jwt
 		
 		 // Coleta os itens pedidos a partir dos IDs
 	    List<ItemPedido> itensPedido = idsItemPedido.stream()
@@ -50,11 +52,11 @@ public class ControleStatusItemPedidoService {
 	        controleStatus.setFuncionario(getFuncionario.buscar(dados.idFuncionario()));
 	        controleStatus.setStatus(getStatus.buscar(dados.status().getId()));
 	        
-	        if(dados.status() == StatusEnum.FAZENDO) {
+	        if(dados.status() == StatusProcessoEnum.FAZENDO) {
 	            controleStatus.setDataHoraIniciado(LocalDateTime.now());
-	        } else if(dados.status() == StatusEnum.PRONTO) {
+	        } else if(dados.status() == StatusProcessoEnum.PRONTO) {
 	            controleStatus.setDataHoraPronto(LocalDateTime.now());
-	        } else if(dados.status() == StatusEnum.ENTREGUE) {
+	        } else if(dados.status() == StatusProcessoEnum.ENTREGUE) {
 	            controleStatus.setDataHoraEntregue(LocalDateTime.now());
 	        }
 	        
@@ -70,13 +72,5 @@ public class ControleStatusItemPedidoService {
 	    // Retorna a lista de DTOs como uma página
 	    return new PageImpl<>(detalhes, paginacao, detalhes.size());
 	}
-
-//	public ControleStatusItemPedidoDtoDetalhar buscarPorId(Long id) {
-//		return new  ControleStatusItemPedidoDtoDetalhar(repository.getReferenceById(id));
-//	}
-//
-//	public Page<ControleStatusItemPedidoDtoDetalhar> listarTodos(Pageable paginacao) {
-//		return repository.findAll(paginacao).map( ControleStatusItemPedidoDtoDetalhar::new);
-//	}
 
 }

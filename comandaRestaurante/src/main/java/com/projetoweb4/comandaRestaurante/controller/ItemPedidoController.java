@@ -12,11 +12,13 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.util.UriComponentsBuilder;
 
 import com.projetoweb4.comandaRestaurante.dto.itemPedido.ItemPedidoDtoCadastrar;
 import com.projetoweb4.comandaRestaurante.dto.itemPedido.ItemPedidoDtoDetalhar;
+import com.projetoweb4.comandaRestaurante.enumeration.StatusProcessoEnum;
 import com.projetoweb4.comandaRestaurante.service.ItemPedidoService;
 
 import jakarta.transaction.Transactional;
@@ -55,9 +57,11 @@ public class ItemPedidoController {
 	
 	
 	@GetMapping
-	public ResponseEntity<Page<ItemPedidoDtoDetalhar>> listar(@PageableDefault(size = 10) Pageable paginacao) {
+	public ResponseEntity<Page<ItemPedidoDtoDetalhar>> listar(
+			@RequestParam(required = false) StatusProcessoEnum statusProcesso,
+			@PageableDefault(size = 10) Pageable paginacao) {
 		
-		return ResponseEntity.ok(service.listarTodos(paginacao));
+		return ResponseEntity.ok(service.listarTodos(paginacao, statusProcesso));
 	}
 	
 	@GetMapping("/{id}")

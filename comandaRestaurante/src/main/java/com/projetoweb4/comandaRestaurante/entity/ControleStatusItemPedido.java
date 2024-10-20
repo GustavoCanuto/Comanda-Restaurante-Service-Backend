@@ -2,7 +2,7 @@ package com.projetoweb4.comandaRestaurante.entity;
 
 import java.time.LocalDateTime;
 
-import com.projetoweb4.comandaRestaurante.entity.domain.Status;
+import com.projetoweb4.comandaRestaurante.entity.domain.StatusProcesso;
 
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
@@ -35,14 +35,14 @@ public class ControleStatusItemPedido {
     private Funcionario funcionario;
 	
 	@ManyToOne
-    @JoinColumn(name = "fk_status")
-    private Status status;
+    @JoinColumn(name = "fk_status_processo")
+    private StatusProcesso statusProcesso;
 	
 	@OneToOne(mappedBy = "controleStatusItemPedido", cascade = CascadeType.ALL)
     private ItemPedido itemPedido;
 
 	public ControleStatusItemPedido(Long id, String descricaoStatus, LocalDateTime dataHoraIniciado,
-			LocalDateTime dataHoraPronto, LocalDateTime dataHoraEntregue, Funcionario funcionario, Status status,
+			LocalDateTime dataHoraPronto, LocalDateTime dataHoraEntregue, Funcionario funcionario, StatusProcesso status,
 			ItemPedido itemPedido) {
 		super();
 		this.id = id;
@@ -51,12 +51,12 @@ public class ControleStatusItemPedido {
 		this.dataHoraPronto = dataHoraPronto;
 		this.dataHoraEntregue = dataHoraEntregue;
 		this.funcionario = funcionario;
-		this.status = status;
+		this.statusProcesso = status;
 		this.itemPedido = itemPedido;
 	}
 
-	public ControleStatusItemPedido(Status status) {
-		this.status = status;
+	public ControleStatusItemPedido(StatusProcesso status) {
+		this.statusProcesso = status;
 	}
 	
 	public ControleStatusItemPedido() {
@@ -110,12 +110,12 @@ public class ControleStatusItemPedido {
 		this.funcionario = funcionario;
 	}
 
-	public Status getStatus() {
-		return status;
+	public StatusProcesso getStatus() {
+		return statusProcesso;
 	}
 
-	public void setStatus(Status status) {
-		this.status = status;
+	public void setStatus(StatusProcesso status) {
+		this.statusProcesso = status;
 	}
 
 	public ItemPedido getItemPedido() {
