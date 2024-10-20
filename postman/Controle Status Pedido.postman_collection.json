@@ -14,7 +14,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n  \"descricao\": \"teste\",\r\n  \"idFuncionario\": 1,\r\n  \"status\": \"PRONTO\",\r\n  \"itensPedido\": [\r\n    {\r\n      \"idItemPedido\": 1\r\n    }\r\n  ]\r\n}",
+					"raw": "{\r\n  \"descricao\": \"teste\",\r\n  \"idFuncionario\": 1,\r\n  \"status\": \"PRONTO\"\r\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -22,7 +22,7 @@
 					}
 				},
 				"url": {
-					"raw": "http://localhost:8080/controle-status-item-pedido/2,3",
+					"raw": "http://localhost:8080/controle-status-item-pedido/1",
 					"protocol": "http",
 					"host": [
 						"localhost"
@@ -30,7 +30,7 @@
 					"port": "8080",
 					"path": [
 						"controle-status-item-pedido",
-						"2,3"
+						"1"
 					]
 				}
 			},

@@ -57,6 +57,56 @@
 			"response": []
 		},
 		{
+			"name": "Atualizar Produto",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "descricao",
+							"value": "Pizza clássica com molho de tomate, queijo mozzarella e manjericão fresco",
+							"type": "text"
+						},
+						{
+							"key": "preco",
+							"value": "45",
+							"type": "text"
+						},
+						{
+							"key": "imagem",
+							"type": "file",
+							"src": "/C:/Users/Gustavo/Pictures/projetoIntregadorTelas/Screenshot 2024-09-14 233410.png"
+						},
+						{
+							"key": "tipoProduto",
+							"value": "prato",
+							"type": "text"
+						},
+						{
+							"key": "nome",
+							"value": "teste3atualizar",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "http://localhost:8080/produto/1",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"produto",
+						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
 			"name": "Listar todos Produtos",
 			"protocolProfileBehavior": {
 				"disableBodyPruning": true
@@ -82,6 +132,48 @@
 					"port": "8080",
 					"path": [
 						"produto"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Listar todos Produtos Por Status e/ou Tipo Produto",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"nome\": \"gf\",\r\n  \"descricao\": \"Pizza clássica com molho de tomate, queijo mozzarella e manjericão fresco\",\r\n  \"preco\": 35.90,\r\n  \"linkImagem\": \"https://example.com/imagem/pizza-margherita.jpg\",\r\n  \"tipoProduto\": \"Bebida_t\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/produto/status?statusGeral=ATIVO&tipoProduto=BEBIDA",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"produto",
+						"status"
+					],
+					"query": [
+						{
+							"key": "statusGeral",
+							"value": "ATIVO"
+						},
+						{
+							"key": "tipoProduto",
+							"value": "BEBIDA"
+						}
 					]
 				}
 			},
@@ -134,7 +226,7 @@
 					}
 				},
 				"url": {
-					"raw": "http://localhost:8080/produto/2",
+					"raw": "http://localhost:8080/produto/1",
 					"protocol": "http",
 					"host": [
 						"localhost"
@@ -142,7 +234,7 @@
 					"port": "8080",
 					"path": [
 						"produto",
-						"2"
+						"1"
 					]
 				}
 			},

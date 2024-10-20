@@ -36,6 +36,35 @@
 			"response": []
 		},
 		{
+			"name": "Atualizar Funcionario",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"nome\": \"gustavo\",\r\n  \"cpf\": \"111.222.333-23\",\r\n  \"cargoFuncionario\": \"COZINHEIRO\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/funcionario/1",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"funcionario",
+						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
 			"name": "Listar todos Funcionario",
 			"protocolProfileBehavior": {
 				"disableBodyPruning": true
@@ -93,34 +122,6 @@
 					"path": [
 						"funcionario",
 						"4"
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "Deletar Funcionario",
-			"request": {
-				"method": "DELETE",
-				"header": [],
-				"body": {
-					"mode": "raw",
-					"raw": "{\r\n  \"nome\": \"gf\",\r\n  \"descricao\": \"Pizza clássica com molho de tomate, queijo mozzarella e manjericão fresco\",\r\n  \"preco\": 35.90,\r\n  \"linkImagem\": \"https://example.com/imagem/pizza-margherita.jpg\",\r\n  \"tipoProduto\": \"Bebida_t\"\r\n}",
-					"options": {
-						"raw": {
-							"language": "json"
-						}
-					}
-				},
-				"url": {
-					"raw": "http://localhost:8080/funcionario",
-					"protocol": "http",
-					"host": [
-						"localhost"
-					],
-					"port": "8080",
-					"path": [
-						"funcionario"
 					]
 				}
 			},

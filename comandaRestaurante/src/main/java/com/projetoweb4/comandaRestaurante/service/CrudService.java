@@ -15,6 +15,6 @@ public interface CrudService<T, G, ID> {
 	
 	void deletar(ID id);
 	
-	T atualizar(G dados, ID id);
+	T atualizar(G dados, ID id) throws IOException;
 
 }

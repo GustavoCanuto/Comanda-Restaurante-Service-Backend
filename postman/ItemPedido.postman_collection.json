@@ -14,7 +14,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "  {\r\n      \"observacoes\": \"Com cebola\",\r\n      \"idProduto\": 1,\r\n      \"idPedido\": 7\r\n}",
+					"raw": "  {\r\n      \"observacoes\": \"Com cebola\",\r\n      \"idProduto\": 1,\r\n      \"idPedido\": 3\r\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -30,6 +30,35 @@
 					"port": "8080",
 					"path": [
 						"item-pedido"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Atualizar Item Pedido",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "  {\r\n      \"observacoes\": \"Com cebola atualizada\",\r\n      \"idProduto\": 2,\r\n      \"idPedido\": 3\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/item-pedido/4",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"item-pedido",
+						"4"
 					]
 				}
 			},
@@ -67,6 +96,48 @@
 			"response": []
 		},
 		{
+			"name": "Listar todos Itens Pedido Por Status e/ou TipoProduto",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"nome\": \"gf\",\r\n  \"descricao\": \"Pizza clássica com molho de tomate, queijo mozzarella e manjericão fresco\",\r\n  \"preco\": 35.90,\r\n  \"linkImagem\": \"https://example.com/imagem/pizza-margherita.jpg\",\r\n  \"tipoProduto\": \"Bebida_t\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/item-pedido/status?statusProcesso=A_FAZER&tipoProduto=BEBIDA",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"item-pedido",
+						"status"
+					],
+					"query": [
+						{
+							"key": "statusProcesso",
+							"value": "A_FAZER"
+						},
+						{
+							"key": "tipoProduto",
+							"value": "BEBIDA"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
 			"name": "Detahar Item Pedido",
 			"protocolProfileBehavior": {
 				"disableBodyPruning": true
@@ -84,7 +155,7 @@
 					}
 				},
 				"url": {
-					"raw": "http://localhost:8080/item-pedido/3",
+					"raw": "http://localhost:8080/item-pedido/6",
 					"protocol": "http",
 					"host": [
 						"localhost"
@@ -92,7 +163,7 @@
 					"port": "8080",
 					"path": [
 						"item-pedido",
-						"3"
+						"6"
 					]
 				}
 			},
@@ -113,7 +184,7 @@
 					}
 				},
 				"url": {
-					"raw": "http://localhost:8080/item-pedido/3",
+					"raw": "http://localhost:8080/item-pedido/6",
 					"protocol": "http",
 					"host": [
 						"localhost"
@@ -121,7 +192,7 @@
 					"port": "8080",
 					"path": [
 						"item-pedido",
-						"3"
+						"6"
 					]
 				}
 			},

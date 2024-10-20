@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -46,6 +47,14 @@ public class ProdutoController {
 		var uri = uriBuilder.path("/produto/{id}").buildAndExpand(entidade.id()).toUri();
 
 		return ResponseEntity.created(uri).body(entidade);
+	}
+	
+	@PutMapping("/{id}")
+	@Transactional
+	public ResponseEntity<ProdutoDtoDetalhar> atualizar(@PathVariable Long id,
+			@ModelAttribute ProdutoDtoCadastrar dados)  throws IOException  {
+
+		return ResponseEntity.ok(service.atualizar(dados, id));
 	}
 
 	@DeleteMapping("/{id}")

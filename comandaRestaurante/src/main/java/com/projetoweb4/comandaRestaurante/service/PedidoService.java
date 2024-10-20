@@ -63,7 +63,16 @@ public class PedidoService implements CrudService<PedidoDtoDetalhar, PedidoDtoCa
 		return new PedidoDtoDetalhar(pedido);
 	}
 
+	public PedidoDtoDetalhar atualizar(PedidoDtoCadastrar dados, Long id) {
+		Pedido pedido = getPedido.buscar(id);
+		
+		pedido.atualizarInformacoes(dados, null);
+		
+		repository.save(pedido);
 
+		return new PedidoDtoDetalhar(pedido);
+	}
+	
 	public PedidoDtoDetalhar buscarPorId(Long id) {
 		return new PedidoDtoDetalhar(repository.getReferenceById(id));
 	}
@@ -111,13 +120,5 @@ public class PedidoService implements CrudService<PedidoDtoDetalhar, PedidoDtoCa
   
         itemPedidoRepository.saveAll(itensPedido);
 	}
-
-	
-	public PedidoDtoDetalhar atualizar(PedidoDtoCadastrar dados, Long id) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-	
-
 
 }

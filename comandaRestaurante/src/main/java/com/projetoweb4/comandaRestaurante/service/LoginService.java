@@ -32,6 +32,10 @@ public class LoginService implements CrudService<LoginDtoDetalhar, LoginDtoCadas
 	@Override
 	public LoginDtoDetalhar cadastrar(LoginDtoCadastrar dados) {
 		
+		if (repository.existsByEmail(dados.email())) {
+			throw new ValidacaoException("Email já registrado!");
+		}
+		
 		StatusGeral statusGeral = getStatusGeral.buscar(StatusGeralEnum.ATIVO.getId());
 
 		Login login = new Login(dados, getFuncionario.buscar(dados.idFuncionario()), statusGeral);
@@ -63,7 +67,9 @@ public class LoginService implements CrudService<LoginDtoDetalhar, LoginDtoCadas
 
 	@Override
 	public LoginDtoDetalhar atualizar(LoginDtoCadastrar dados, Long id) {
-		// TODO Auto-generated method stub
+		if (repository.existsByEmail(dados.email())) {
+			throw new ValidacaoException("Email já registrado!");
+		}
 		return null;
 	}
 	

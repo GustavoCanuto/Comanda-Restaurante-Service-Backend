@@ -6,4 +6,6 @@ import com.projetoweb4.comandaRestaurante.entity.Funcionario;
 
 public interface FuncionarioRepository extends JpaRepository<Funcionario, Long> {
 
+	boolean existsByCpf(String cpf);
+
 }

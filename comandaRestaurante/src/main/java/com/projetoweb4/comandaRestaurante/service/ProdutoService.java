@@ -52,6 +52,22 @@ public class ProdutoService implements CrudService<ProdutoDtoDetalhar, ProdutoDt
 		return new ProdutoDtoDetalhar(produto);
 	}
 
+
+	public ProdutoDtoDetalhar atualizar(ProdutoDtoCadastrar dados, Long id) throws IOException {
+		Produto produto = getProduto.buscar(id);
+		
+		TipoProduto tipoProduto = getTipoProduto.buscar(dados.tipoProduto().getId());
+		
+		StatusGeral statusGeral = getStatusGeral.buscar(StatusGeralEnum.ATIVO.getId());
+
+		String imagemUrl = uploadService.uploadImage(dados.imagem(), "produto_", "imagesProduto");
+		
+		produto.atualizarInformacoes(dados, tipoProduto, imagemUrl, statusGeral); 
+
+		repository.save(produto);
+
+		return new ProdutoDtoDetalhar(produto);
+	}
 	public ProdutoDtoDetalhar buscarPorId(Long id) {
 		return new ProdutoDtoDetalhar(repository.getReferenceById(id));
 	}
@@ -96,11 +112,6 @@ public class ProdutoService implements CrudService<ProdutoDtoDetalhar, ProdutoDt
 		produto.setStatusGeral(getStatusGeral.buscar(StatusGeralEnum.DESATIVADO.getId()));
 		
 		repository.save(produto);
-	}
-
-	public ProdutoDtoDetalhar atualizar(ProdutoDtoCadastrar dados, Long id) {
-		// TODO Auto-generated method stub
-		return null;
 	}
 
 }

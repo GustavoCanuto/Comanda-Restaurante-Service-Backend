@@ -14,7 +14,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n  \"mesa\": 1,\r\n  \"comanda\": \"Comanda 123\",\r\n  \"itensPedido\": [\r\n    {\r\n      \"observacoes\": \"teste\",\r\n      \"idProduto\": 1\r\n    }\r\n  ]\r\n}",
+					"raw": "{\r\n  \"mesa\": 1,\r\n  \"comanda\": \"Comanda 123\",\r\n  \"itensPedido\": [\r\n    {\r\n      \"observacoes\": \"item1\",\r\n      \"idProduto\": 1\r\n    },\r\n        {\r\n      \"observacoes\": \"item2\",\r\n      \"idProduto\": 1\r\n    }\r\n  ]\r\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -30,6 +30,35 @@
 					"port": "8080",
 					"path": [
 						"pedido"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Atualizar Pedido",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"mesa\": 5,\r\n  \"comanda\": \"Comanda 123 atualizada\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/pedido/3",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"pedido",
+						"3"
 					]
 				}
 			},
@@ -67,6 +96,44 @@
 			"response": []
 		},
 		{
+			"name": "Listar todos Pedidos Por Status",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"nome\": \"gf\",\r\n  \"descricao\": \"Pizza clássica com molho de tomate, queijo mozzarella e manjericão fresco\",\r\n  \"preco\": 35.90,\r\n  \"linkImagem\": \"https://example.com/imagem/pizza-margherita.jpg\",\r\n  \"tipoProduto\": \"Bebida_t\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/pedido/status?statusProcesso=CANCELADO",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"pedido",
+						"status"
+					],
+					"query": [
+						{
+							"key": "statusProcesso",
+							"value": "CANCELADO"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
 			"name": "Detahar Pedido",
 			"protocolProfileBehavior": {
 				"disableBodyPruning": true
@@ -84,7 +151,7 @@
 					}
 				},
 				"url": {
-					"raw": "http://localhost:8080/pedido/7",
+					"raw": "http://localhost:8080/pedido/3",
 					"protocol": "http",
 					"host": [
 						"localhost"
@@ -92,7 +159,7 @@
 					"port": "8080",
 					"path": [
 						"pedido",
-						"7"
+						"3"
 					]
 				}
 			},

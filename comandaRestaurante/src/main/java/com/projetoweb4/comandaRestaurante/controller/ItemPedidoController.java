@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -47,6 +48,14 @@ public class ItemPedidoController {
 	}
 	
 
+	@PutMapping("/{id}")
+	@Transactional
+	public ResponseEntity<ItemPedidoDtoDetalhar> atualizar(@PathVariable Long id,
+			@RequestBody ItemPedidoDtoCadastrar dados) {
+
+		return ResponseEntity.ok(service.atualizar(dados, id));
+	}
+	
 	@DeleteMapping("/{id}")
 	@Transactional
 	public ResponseEntity<Void> excluir(@PathVariable Long id) {

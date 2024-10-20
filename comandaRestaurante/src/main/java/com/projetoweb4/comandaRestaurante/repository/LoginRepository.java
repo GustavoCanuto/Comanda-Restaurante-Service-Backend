@@ -6,4 +6,6 @@ import com.projetoweb4.comandaRestaurante.entity.Login;
 
 public interface LoginRepository extends JpaRepository<Login, Long> {
 
+	boolean existsByEmail(String email);
+
 }

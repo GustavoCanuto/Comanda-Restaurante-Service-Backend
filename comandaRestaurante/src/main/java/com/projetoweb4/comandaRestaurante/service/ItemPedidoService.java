@@ -62,7 +62,19 @@ public class ItemPedidoService implements CrudService<ItemPedidoDtoDetalhar, Ite
 		return new ItemPedidoDtoDetalhar(itemPedido, true);
 	}
 
-
+	public ItemPedidoDtoDetalhar atualizar(ItemPedidoDtoCadastrar dados, Long id) {
+		
+		ItemPedido itemPedido = getItemPedido.buscar(id);
+		Produto produto = getProduto.buscar(dados.idProduto());
+		Pedido pedido = getPedido.buscar(dados.idPedido());
+		
+		itemPedido.atualizarInformacoes(dados.observacoes(), pedido, produto);
+		
+		repository.save(itemPedido);
+				
+		return new ItemPedidoDtoDetalhar(itemPedido, true);
+	}
+	
 	public ItemPedidoDtoDetalhar buscarPorId(Long id) {
 		return new ItemPedidoDtoDetalhar(repository.getReferenceById(id), true);
 	}
@@ -118,12 +130,6 @@ public class ItemPedidoService implements CrudService<ItemPedidoDtoDetalhar, Ite
 		
 		repository.save(itemPedido);
 		
-	}
-
-
-	public ItemPedidoDtoDetalhar atualizar(ItemPedidoDtoCadastrar dados, Long id) {
-		// TODO Auto-generated method stub
-		return null;
 	}
 
 }
