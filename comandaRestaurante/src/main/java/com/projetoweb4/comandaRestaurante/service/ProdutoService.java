@@ -14,13 +14,14 @@ import com.projetoweb4.comandaRestaurante.entity.Produto;
 import com.projetoweb4.comandaRestaurante.entity.domain.StatusGeral;
 import com.projetoweb4.comandaRestaurante.entity.domain.TipoProduto;
 import com.projetoweb4.comandaRestaurante.enumeration.StatusGeralEnum;
+import com.projetoweb4.comandaRestaurante.enumeration.TipoProdutoEnum;
 import com.projetoweb4.comandaRestaurante.repository.ProdutoRepository;
 import com.projetoweb4.comandaRestaurante.service.buscador.BuscarProduto;
 import com.projetoweb4.comandaRestaurante.service.buscador.BuscarStatusGeral;
 import com.projetoweb4.comandaRestaurante.service.buscador.BuscarTipoProduto;
 
 @Service
-public class ProdutoService{
+public class ProdutoService implements CrudService<ProdutoDtoDetalhar, ProdutoDtoCadastrar, Long>{
 
 	@Autowired
 	private ProdutoRepository repository;
@@ -55,16 +56,37 @@ public class ProdutoService{
 		return new ProdutoDtoDetalhar(repository.getReferenceById(id));
 	}
 
-	public Page<ProdutoDtoDetalhar> listarTodos(Pageable paginacao, StatusGeralEnum statusGeral) {
+	public Page<ProdutoDtoDetalhar> listarTodos(Pageable paginacao) {
+		return repository.findAll(paginacao).map(ProdutoDtoDetalhar::new);
+	}
+
+	public Page<ProdutoDtoDetalhar> listarTodosPorStatus(
+			Pageable paginacao, StatusGeralEnum statusGeral, TipoProdutoEnum tipoProdutoEnum) {
 		
-		if(!Objects.isNull(statusGeral)) {
+		if(!Objects.isNull(statusGeral) && !Objects.isNull(tipoProdutoEnum) ) {
+			
+			StatusGeral status = getStatusGeral.buscar(statusGeral.getId());
+			TipoProduto tipoProduto = getTipoProduto.buscar(tipoProdutoEnum.getId());
+			
+			return repository
+					.findByStatusGeralAndTipoProduto(status, tipoProduto, paginacao)
+					.map(ProdutoDtoDetalhar::new);
+			
+		}
+		else if(!Objects.isNull(statusGeral)) {
 			return repository
 					.findByStatusGeral(getStatusGeral.buscar(statusGeral.getId()), paginacao)
 					.map(ProdutoDtoDetalhar::new);
 					
 		}
+		else if (!Objects.isNull(tipoProdutoEnum)) {
+			return repository
+					.findByTipoProduto(getTipoProduto.buscar(tipoProdutoEnum.getId()), paginacao)
+					.map(ProdutoDtoDetalhar::new);
+		}
 		
-		return repository.findAll(paginacao).map(ProdutoDtoDetalhar::new);
+		return repository.findByStatusGeralNot(getStatusGeral.buscar(StatusGeralEnum.DESATIVADO.getId()),paginacao)
+				.map(ProdutoDtoDetalhar::new);
 	}
 
 	

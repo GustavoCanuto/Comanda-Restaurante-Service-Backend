@@ -22,6 +22,7 @@ import org.springframework.web.util.UriComponentsBuilder;
 import com.projetoweb4.comandaRestaurante.dto.produto.ProdutoDtoCadastrar;
 import com.projetoweb4.comandaRestaurante.dto.produto.ProdutoDtoDetalhar;
 import com.projetoweb4.comandaRestaurante.enumeration.StatusGeralEnum;
+import com.projetoweb4.comandaRestaurante.enumeration.TipoProdutoEnum;
 import com.projetoweb4.comandaRestaurante.service.ProdutoService;
 
 import jakarta.transaction.Transactional;
@@ -58,10 +59,19 @@ public class ProdutoController {
 
 	@GetMapping
 	public ResponseEntity<Page<ProdutoDtoDetalhar>> listar(
-			@RequestParam(required = false) StatusGeralEnum statusGeral,
 			@PageableDefault(size = 10) Pageable paginacao) {
 
-		return ResponseEntity.ok(service.listarTodos(paginacao, statusGeral));
+		return ResponseEntity.ok(service.listarTodos(paginacao));
+	}
+
+	
+	@GetMapping("/status")
+	public ResponseEntity<Page<ProdutoDtoDetalhar>> listarPorStatus(
+			@RequestParam(required = false) StatusGeralEnum statusGeral,
+			@RequestParam(required = false) TipoProdutoEnum tipoProduto,
+			@PageableDefault(size = 10) Pageable paginacao) {
+
+		return ResponseEntity.ok(service.listarTodosPorStatus(paginacao, statusGeral, tipoProduto));
 	}
 
 	@GetMapping("/{id}")

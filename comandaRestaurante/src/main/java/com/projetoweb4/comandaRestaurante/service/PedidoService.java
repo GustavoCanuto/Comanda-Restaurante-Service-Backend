@@ -23,7 +23,7 @@ import com.projetoweb4.comandaRestaurante.service.buscador.BuscarProduto;
 import com.projetoweb4.comandaRestaurante.service.buscador.BuscarStatusProcesso;
 
 @Service
-public class PedidoService{
+public class PedidoService implements CrudService<PedidoDtoDetalhar, PedidoDtoCadastrar, Long>{
 
 	@Autowired
 	private PedidoRepository repository;
@@ -68,20 +68,34 @@ public class PedidoService{
 		return new PedidoDtoDetalhar(repository.getReferenceById(id));
 	}
 
+	@Override
+	public Page<PedidoDtoDetalhar> listarTodos(Pageable paginacao) {
+		return repository.findAll(paginacao).map(PedidoDtoDetalhar::new);
+	}
 
-	public Page<PedidoDtoDetalhar> listarTodos(Pageable paginacao, StatusProcessoEnum statusProcesso) {
+	public Page<PedidoDtoDetalhar> listarTodosPorStatus(Pageable paginacao, StatusProcessoEnum statusProcesso) {
 		//ele vai fazer um findAll nos pedidos porém só vai retornar o pedido se algum itemPedido tiver o idstatusProcesso mandado
 		if(!Objects.isNull(statusProcesso)) {
 			
 		StatusProcesso status = getStatusProcesso.buscar(statusProcesso.getId());
 		
+	    // Verifica se o status é CANCELADO
+        if (statusProcesso.getId() == StatusProcessoEnum.CANCELADO.getId()) {
+            // Retorna somente os pedidos em que TODOS os itens estão com o status CANCELADO
+            return repository.findAllPedidosComItensCancelados(status, paginacao)
+            		.map(PedidoDtoDetalhar::new);
+        }
+        
 		return repository
 				.findByItensPedido_ControleStatusItemPedido_StatusProcesso(status, paginacao)
 				.map(PedidoDtoDetalhar::new);
 				
 		}
 
-		return repository.findAll(paginacao).map(PedidoDtoDetalhar::new);
+		StatusProcesso status = getStatusProcesso.buscar(StatusProcessoEnum.CANCELADO.getId());
+		
+		return repository.findByItensPedido_ControleStatusItemPedido_StatusProcessoNot(status, paginacao)
+				.map(PedidoDtoDetalhar::new);
 	}
 
 

@@ -54,13 +54,19 @@ public class PedidoController {
 		return ResponseEntity.noContent().build();
 	}
 	
-	//BUSCAR DIFERENTE DE CANCELADO ENDPOINT
 	@GetMapping
 	public ResponseEntity<Page<PedidoDtoDetalhar>> listar(
+			@PageableDefault(size = 10) Pageable paginacao) {
+		
+		return ResponseEntity.ok(service.listarTodos(paginacao));
+	}
+
+	@GetMapping("/status")
+	public ResponseEntity<Page<PedidoDtoDetalhar>> listarPorStatus(
 			@RequestParam(required = false) StatusProcessoEnum statusProcesso,
 			@PageableDefault(size = 10) Pageable paginacao) {
 		
-		return ResponseEntity.ok(service.listarTodos(paginacao, statusProcesso));
+		return ResponseEntity.ok(service.listarTodosPorStatus(paginacao, statusProcesso));
 	}
 	
 	@GetMapping("/{id}")

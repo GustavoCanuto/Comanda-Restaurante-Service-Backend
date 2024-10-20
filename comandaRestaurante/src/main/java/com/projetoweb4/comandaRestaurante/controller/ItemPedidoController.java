@@ -19,6 +19,7 @@ import org.springframework.web.util.UriComponentsBuilder;
 import com.projetoweb4.comandaRestaurante.dto.itemPedido.ItemPedidoDtoCadastrar;
 import com.projetoweb4.comandaRestaurante.dto.itemPedido.ItemPedidoDtoDetalhar;
 import com.projetoweb4.comandaRestaurante.enumeration.StatusProcessoEnum;
+import com.projetoweb4.comandaRestaurante.enumeration.TipoProdutoEnum;
 import com.projetoweb4.comandaRestaurante.service.ItemPedidoService;
 
 import jakarta.transaction.Transactional;
@@ -55,13 +56,20 @@ public class ItemPedidoController {
 		return ResponseEntity.noContent().build();
 	}
 	
-	
 	@GetMapping
 	public ResponseEntity<Page<ItemPedidoDtoDetalhar>> listar(
-			@RequestParam(required = false) StatusProcessoEnum statusProcesso,
 			@PageableDefault(size = 10) Pageable paginacao) {
 		
-		return ResponseEntity.ok(service.listarTodos(paginacao, statusProcesso));
+		return ResponseEntity.ok(service.listarTodos(paginacao));
+	}
+	
+	@GetMapping("/status")
+	public ResponseEntity<Page<ItemPedidoDtoDetalhar>> listarPorStatus(
+			@RequestParam(required = false) StatusProcessoEnum statusProcesso,
+			@RequestParam(required = false) TipoProdutoEnum tipoProduto,
+			@PageableDefault(size = 10) Pageable paginacao) {
+		
+		return ResponseEntity.ok(service.listarTodosPorStatus(paginacao, statusProcesso, tipoProduto));
 	}
 	
 	@GetMapping("/{id}")
