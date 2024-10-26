@@ -105,3 +105,7 @@ insert into tb_dom_status_processo(id,status,descricao) values
 insert into tb_dom_status_geral(id,status,descricao) values
 (1, 'A','Ativo'),
 (2, 'D','Desativado');
+
+--senha 123456
+insert into tb_login (fk_funcionario, email, senha) values
+(1,'gustavo@gmail.com','$2a$12$OBaz9DfrFN7jVxtZWx.iZ.iU2C.lgCoNs411hU0FlITCBanSSLp.S');

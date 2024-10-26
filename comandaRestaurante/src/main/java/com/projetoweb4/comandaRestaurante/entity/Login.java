@@ -1,5 +1,12 @@
 package com.projetoweb4.comandaRestaurante.entity;
 
+import java.util.Collection;
+import java.util.List;
+
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
+
 import com.projetoweb4.comandaRestaurante.dto.login.LoginDtoCadastrar;
 import com.projetoweb4.comandaRestaurante.entity.domain.StatusGeral;
 
@@ -13,7 +20,7 @@ import jakarta.persistence.Table;
 
 @Table(name = "tb_login")
 @Entity(name = "Login")
-public class Login {
+public class Login  implements UserDetails{
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -30,6 +37,41 @@ public class Login {
     @JoinColumn(name = "fk_status_geral")
     private StatusGeral statusGeral;
 
+    @Override
+    public Collection<? extends GrantedAuthority> getAuthorities() {
+        return List.of(new SimpleGrantedAuthority("ROLE_USER"));
+    }
+
+    @Override
+    public String getPassword() {
+        return senha;
+    }
+
+    @Override
+    public String getUsername() {
+        return email;
+    }
+
+    @Override
+    public boolean isAccountNonExpired() {
+        return true;
+    }
+
+    @Override
+    public boolean isAccountNonLocked() {
+        return true;
+    }
+
+    @Override
+    public boolean isCredentialsNonExpired() {
+        return true;
+    }
+
+    @Override
+    public boolean isEnabled() {
+        return true;
+    }
+    
 	public Login(Long id, String email, String senha, Funcionario funcionario, StatusGeral statusGeral) {
 		super();
 		this.id = id;
