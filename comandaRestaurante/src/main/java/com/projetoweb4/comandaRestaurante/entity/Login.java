@@ -17,6 +17,7 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
+import java.text.Normalizer;
 
 @Table(name = "tb_login")
 @Entity(name = "Login")
@@ -39,7 +40,13 @@ public class Login  implements UserDetails{
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return List.of(new SimpleGrantedAuthority("ROLE_USER"));
+    	 // Adiciona o prefixo ROLE_ ao cargo, que é necessário pelo Spring Security
+    	   // Remove caracteres especiais e converte para maiúsculas
+    	 String role = formatarRole(funcionario.getCargoFuncionario().getCargo());
+
+    	 return List.of(new SimpleGrantedAuthority(role));
+
+       // return List.of(new SimpleGrantedAuthority("ROLE_USER"));
     }
 
     @Override
@@ -149,6 +156,14 @@ public class Login  implements UserDetails{
 
 	public void setStatusGeral(StatusGeral statusGeral) {
 		this.statusGeral = statusGeral;
+	}
+	
+	public String formatarRole(String cargo) {
+	    // Remove caracteres especiais e converte para maiúsculas
+	    String role = Normalizer.normalize(cargo, Normalizer.Form.NFD)
+	                   .replaceAll("[^\\p{ASCII}]", "")
+	                   .toUpperCase();
+	    return "ROLE_" + role;
 	}
 	
 }

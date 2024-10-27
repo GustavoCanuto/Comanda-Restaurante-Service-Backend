@@ -35,6 +35,10 @@ public class SecurityFilter extends OncePerRequestFilter {
 
             var authentication = new UsernamePasswordAuthenticationToken(usuario, null, usuario.getAuthorities());
             SecurityContextHolder.getContext().setAuthentication(authentication);
+            
+            // Log das roles para o usuário autenticado
+            System.out.println("Usuário autenticado: " + usuario.getUsername());
+            usuario.getAuthorities().forEach(authority -> System.out.println("Role enviada: " + authority.getAuthority()));
         }
 
         filterChain.doFilter(request, response);
