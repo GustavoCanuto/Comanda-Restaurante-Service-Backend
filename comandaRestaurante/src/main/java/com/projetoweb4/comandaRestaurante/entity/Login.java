@@ -92,9 +92,9 @@ public class Login  implements UserDetails{
 		super();
 	}
 
-	public Login(LoginDtoCadastrar dados, Funcionario funcionario, StatusGeral statusGeral) {
-		this.email = dados.email();
-		this.senha = dados.senha();
+	public Login(String email, String senha, Funcionario funcionario, StatusGeral statusGeral) {
+		this.email = email;
+		this.senha = senha;
 		this.funcionario = funcionario;
 		this.statusGeral = statusGeral;
 	}

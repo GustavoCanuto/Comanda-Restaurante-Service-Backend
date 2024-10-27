@@ -8,6 +8,8 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
 
+import com.projetoweb4.comandaRestaurante.entity.domain.StatusGeral;
+import com.projetoweb4.comandaRestaurante.enumeration.StatusGeralEnum;
 import com.projetoweb4.comandaRestaurante.repository.LoginRepository;
 import com.projetoweb4.comandaRestaurante.service.recurso.TokenService;
 
@@ -31,7 +33,7 @@ public class SecurityFilter extends OncePerRequestFilter {
 
         if (tokenJWT != null) {
             var subject = tokenService.getSubject(tokenJWT);
-            var usuario = repository.findByEmail(subject);
+            var usuario = repository.findByEmailAndStatusGeral_Id(subject, StatusGeralEnum.ATIVO.getId());
 
             var authentication = new UsernamePasswordAuthenticationToken(usuario, null, usuario.getAuthorities());
             SecurityContextHolder.getContext().setAuthentication(authentication);

@@ -9,13 +9,12 @@ import com.projetoweb4.comandaRestaurante.entity.Login;
 public record LoginDtoDetalhar(
 		Long id,
 		String email,
-		String senha,
 		FuncionarioDtoDetalhar funcionario,
 		StatusDtoDetalhar statusGeral
 		) {
 
 	public LoginDtoDetalhar(Login entidade) {
-		this(entidade.getId(), entidade.getEmail(), entidade.getSenha(), new FuncionarioDtoDetalhar(entidade.getFuncionario()) ,
+		this(entidade.getId(), entidade.getEmail(), new FuncionarioDtoDetalhar(entidade.getFuncionario()) ,
 				new StatusDtoDetalhar(entidade.getStatusGeral())
 				);
 	}

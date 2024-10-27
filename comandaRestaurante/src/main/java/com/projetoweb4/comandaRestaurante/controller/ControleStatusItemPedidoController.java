@@ -31,13 +31,17 @@ public class ControleStatusItemPedidoController {
 
 	@PutMapping("/{idsItemPedido}")
 	@Transactional
-	public ResponseEntity<Page<ItemPedidoDtoDetalhar>> cadastrar(
+	public ResponseEntity<Page<ItemPedidoDtoDetalhar>> atualizar(
 			@RequestBody @Valid ControleStatusItemPedidoDtoUpdate dados, 																						
 			@PageableDefault(size = 10) Pageable paginacao,
 			@PathVariable List<Long> idsItemPedido) {
 		
+	       // Obtém o token JWT do contexto de segurança atual
+
+        
 		   // Chama o serviço para atualizar os itens e obter os detalhes
-	    Page<ItemPedidoDtoDetalhar> entidade = service.atualizar(idsItemPedido, dados, paginacao);
+	    Page<ItemPedidoDtoDetalhar> entidade
+	    = service.atualizar(idsItemPedido, dados, paginacao);
 
 	    // Retorna a resposta com o status 200 e os dados da entidade
 	    return ResponseEntity.ok(entidade);

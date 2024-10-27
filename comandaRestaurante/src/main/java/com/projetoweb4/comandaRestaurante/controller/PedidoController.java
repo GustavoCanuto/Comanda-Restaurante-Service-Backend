@@ -5,6 +5,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -33,6 +34,7 @@ public class PedidoController {
 	@Autowired
 	private PedidoService service;
 
+	@PreAuthorize("hasRole('GARCON')")
 	@PostMapping
 	@Transactional
 	public ResponseEntity<PedidoDtoDetalhar> cadastrar(@RequestBody @Valid PedidoDtoCadastrar dados,
@@ -45,6 +47,7 @@ public class PedidoController {
 		return ResponseEntity.created(uri).body(entidade);
 	}
 	
+	@PreAuthorize("hasRole('GERENTE','GARCON')")
 	@PutMapping("/{id}")
 	@Transactional
 	public ResponseEntity<PedidoDtoDetalhar> atualizar(@PathVariable Long id,
@@ -53,6 +56,7 @@ public class PedidoController {
 		return ResponseEntity.ok(service.atualizar(dados, id));
 	}
 	
+	@PreAuthorize("hasRole('GERENTE')")
 	@DeleteMapping("/{id}")
 	@Transactional
 	public ResponseEntity<Void> excluir(@PathVariable Long id) {

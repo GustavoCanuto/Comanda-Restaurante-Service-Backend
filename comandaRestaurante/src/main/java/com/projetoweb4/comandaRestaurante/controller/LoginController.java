@@ -7,6 +7,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -44,6 +45,7 @@ public class LoginController {
     @Autowired
     private TokenService tokenService;
 
+    @PreAuthorize("hasRole('GERENTE')")
 	@PostMapping
 	@Transactional
 	public ResponseEntity<LoginDtoDetalhar> cadastrar(@RequestBody @Valid LoginDtoCadastrar dados, 																						
@@ -56,6 +58,7 @@ public class LoginController {
 		return ResponseEntity.created(uri).body(entidade);
 	}
 
+    @PreAuthorize("hasRole('GERENTE')")
 	@DeleteMapping("/{id}")
 	@Transactional
 	public ResponseEntity<Void> excluir(@PathVariable Long id) {
@@ -65,12 +68,14 @@ public class LoginController {
 		return ResponseEntity.noContent().build();
 	}
 
+    @PreAuthorize("hasRole('GERENTE')")
 	@GetMapping
 	public ResponseEntity<Page<LoginDtoDetalhar>> listar(@PageableDefault(size = 10) Pageable paginacao) {
 
 		return ResponseEntity.ok(service.listarTodos(paginacao));
 	}
 
+    @PreAuthorize("hasRole('GERENTE')")
 	@GetMapping("/{id}")
 	public ResponseEntity<LoginDtoDetalhar> detalhar(@PathVariable Long id) {
 

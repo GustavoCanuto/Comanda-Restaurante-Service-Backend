@@ -8,6 +8,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -37,6 +38,7 @@ public class ProdutoController {
 	@Autowired
 	private ProdutoService service;
 
+	@PreAuthorize("hasRole('GERENTE')")
 	@PostMapping(consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
 	@Transactional
 	public ResponseEntity<ProdutoDtoDetalhar> cadastrar(@ModelAttribute @Valid ProdutoDtoCadastrar dados, 																						
@@ -49,6 +51,7 @@ public class ProdutoController {
 		return ResponseEntity.created(uri).body(entidade);
 	}
 	
+	@PreAuthorize("hasRole('GERENTE')")
 	@PutMapping("/{id}")
 	@Transactional
 	public ResponseEntity<ProdutoDtoDetalhar> atualizar(@PathVariable Long id,
@@ -57,6 +60,7 @@ public class ProdutoController {
 		return ResponseEntity.ok(service.atualizar(dados, id));
 	}
 
+	@PreAuthorize("hasRole('GERENTE')")
 	@DeleteMapping("/{id}")
 	@Transactional
 	public ResponseEntity<Void> excluir(@PathVariable Long id) {
