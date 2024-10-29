@@ -2,6 +2,8 @@ package com.projetoweb4.comandaRestaurante.service;
 
 import static java.util.Optional.ofNullable;
 
+import java.util.Objects;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -10,19 +12,22 @@ import org.springframework.stereotype.Service;
 
 import com.projetoweb4.comandaRestaurante.dto.login.LoginDtoCadastrar;
 import com.projetoweb4.comandaRestaurante.dto.login.LoginDtoDetalhar;
+import com.projetoweb4.comandaRestaurante.dto.login.LoginTrocarSenhaDtoAtualizar;
 import com.projetoweb4.comandaRestaurante.entity.Funcionario;
 import com.projetoweb4.comandaRestaurante.entity.Login;
 import com.projetoweb4.comandaRestaurante.entity.domain.CargoFuncionario;
 import com.projetoweb4.comandaRestaurante.entity.domain.StatusGeral;
+import com.projetoweb4.comandaRestaurante.enumeration.CargoFuncionarioEnum;
 import com.projetoweb4.comandaRestaurante.enumeration.StatusGeralEnum;
 import com.projetoweb4.comandaRestaurante.repository.FuncionarioRepository;
 import com.projetoweb4.comandaRestaurante.repository.LoginRepository;
 import com.projetoweb4.comandaRestaurante.service.buscador.BuscarCargoFuncionario;
 import com.projetoweb4.comandaRestaurante.service.buscador.BuscarStatusGeral;
+import com.projetoweb4.comandaRestaurante.service.recurso.TokenService;
 import com.projetoweb4.comandaRestaurante.validacoes.ValidacaoException;
 
 @Service
-public class LoginService implements CrudService<LoginDtoDetalhar, LoginDtoCadastrar, Long>{
+public class LoginService{
 
 	@Autowired
 	private LoginRepository repository;
@@ -38,8 +43,10 @@ public class LoginService implements CrudService<LoginDtoDetalhar, LoginDtoCadas
 	
 	@Autowired
 	private PasswordEncoder passwordEncoder;
+	
+	@Autowired
+	private TokenService tokenService;
 
-	@Override
 	public LoginDtoDetalhar cadastrar(LoginDtoCadastrar dados) {
 		
 		if (repository.existsByEmail(dados.email())) {
@@ -60,24 +67,24 @@ public class LoginService implements CrudService<LoginDtoDetalhar, LoginDtoCadas
 
 		String senhaCriptografada = passwordEncoder.encode(dados.senha());
 		  
-		Login login = new Login(dados.email(),senhaCriptografada, funcionario, statusGeral);
+		Login login = new Login(dados.email().toUpperCase(),senhaCriptografada, funcionario, statusGeral);
 
 		repository.save(login);
 
 		return new LoginDtoDetalhar(login);
 	}
 
-	@Override
+
 	public LoginDtoDetalhar buscarPorId(Long id) {
 		return new LoginDtoDetalhar(repository.getReferenceById(id));
 	}
 
-	@Override
+
 	public Page<LoginDtoDetalhar> listarTodos(Pageable paginacao) {
 		return repository.findAll(paginacao).map(LoginDtoDetalhar::new);
 	}
 
-	@Override
+	
 	public void deletar(Long id) {
 		Login login = ofNullable(repository.findById(id).get())
 							.orElseThrow(() -> new ValidacaoException("Id de Login Inválido"));
@@ -87,28 +94,52 @@ public class LoginService implements CrudService<LoginDtoDetalhar, LoginDtoCadas
 		repository.save(login);
 	}
 
-	@Override
-	public LoginDtoDetalhar atualizar(LoginDtoCadastrar dados, Long id) {
+	public LoginDtoDetalhar atualizarSenha(LoginTrocarSenhaDtoAtualizar dados) {
 		
-		//if usuario gerente pode atualizar somente email
-		if (repository.existsByEmail(dados.email())) {
-			throw new ValidacaoException("Email já registrado!");
+	    Funcionario funcionario = tokenService.getFuncionarioAutenticado();
+	    
+	    Login loginDoUsuario = repository.findByFuncionario(funcionario);
+	    
+	    // Verifica se a senha antiga fornecida pelo usuário corresponde à senha criptografada no banco de dados
+	    if (passwordEncoder.matches(dados.senhaAntiga(), loginDoUsuario.getSenha())) {
+	        String senhaCriptografada = passwordEncoder.encode(dados.novaSenha());
+	        loginDoUsuario.setSenha(senhaCriptografada);
+	    } else {
+	        throw new ValidacaoException("Senha antiga incorreta.");
+	    }
+	    
+	    repository.save(loginDoUsuario);
+
+	    return new LoginDtoDetalhar(loginDoUsuario);
+	}
+
+	public Page<LoginDtoDetalhar> listarTodosPorStatus(
+			Pageable paginacao, StatusGeralEnum statusGeral, CargoFuncionarioEnum cargoFuncionarioEnum) {
+		
+		if(!Objects.isNull(statusGeral) && !Objects.isNull(cargoFuncionarioEnum) ) {
+			
+			StatusGeral status = getStatusGeral.buscar(statusGeral.getId());
+			CargoFuncionario cargoFuncionario = getCargoFuncionario.buscar(cargoFuncionarioEnum.getId());
+			
+			return repository
+					.findByStatusGeralAndFuncionario_CargoFuncionario(status, cargoFuncionario, paginacao)
+					.map(LoginDtoDetalhar::new);
+			
+		}
+		else if(!Objects.isNull(statusGeral)) {
+			return repository
+					.findByStatusGeral(getStatusGeral.buscar(statusGeral.getId()), paginacao)
+					.map(LoginDtoDetalhar::new);
+					
+		}
+		else if (!Objects.isNull(cargoFuncionarioEnum)) {
+			return repository
+					.findByFuncionario_CargoFuncionario(getCargoFuncionario.buscar(cargoFuncionarioEnum.getId()), paginacao)
+					.map(LoginDtoDetalhar::new);
 		}
 		
-		
-		return null;
+		return repository.findByStatusGeralNot(getStatusGeral.buscar(StatusGeralEnum.DESATIVADO.getId()),paginacao)
+				.map(LoginDtoDetalhar::new);
 	}
-	
-	public LoginDtoDetalhar atualizarSenha(LoginDtoCadastrar dados, Long id) {
-		
-		//usuario pode atualizar somente a senha dele automatico
-		
-		
-		return null;
-	}
-	
-	
-	
-
 
 }

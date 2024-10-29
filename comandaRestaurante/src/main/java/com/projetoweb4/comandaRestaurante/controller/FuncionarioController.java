@@ -24,18 +24,6 @@ public class FuncionarioController {
 	@Autowired
 	private FuncionarioService service;
 
-//	@PostMapping
-//	@Transactional
-//	public ResponseEntity<FuncionarioDtoDetalhar> cadastrar(@RequestBody @Valid FuncionarioDtoCadastrar dados, 																						
-//			UriComponentsBuilder uriBuilder) throws IOException {
-//		
-//		var entidade = service.cadastrar(dados);
-//
-//		var uri = uriBuilder.path("/funcionario/{id}").buildAndExpand(entidade.id()).toUri();
-//
-//		return ResponseEntity.created(uri).body(entidade);
-//	}
-
 	@PreAuthorize("hasRole('GERENTE')")
 	@PutMapping("/{id}")
 	@Transactional
@@ -45,16 +33,6 @@ public class FuncionarioController {
 		return ResponseEntity.ok(service.atualizar(dados, id));
 	}
 	
-//	@GetMapping
-//	public ResponseEntity<Page<FuncionarioDtoDetalhar>> listar(@PageableDefault(size = 10) Pageable paginacao) {
-//
-//		return ResponseEntity.ok(service.listarTodos(paginacao));
-//	}
-//
-//	@GetMapping("/{id}")
-//	public ResponseEntity<FuncionarioDtoDetalhar> detalhar(@PathVariable Long id) {
-//
-//		return ResponseEntity.ok(service.buscarPorId(id));
-//	}
+
 
 }

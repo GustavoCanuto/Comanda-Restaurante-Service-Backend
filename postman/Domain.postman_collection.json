@@ -10,6 +10,16 @@
 		{
 			"name": "Listar Tipo Produtos",
 			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJjb3ppbmhlaXJvQGdtYWlsLmNvbSIsInN0YXR1c0dlcmFsIjoxLCJpZFVzdWFyaW8iOjUsImlzcyI6IkFQSSBjb21hbmRhIHNlcnZpY2UiLCJmdW5jaW9uYXJpbyI6NiwiY2FyZ28iOjEsImV4cCI6MTczMDE5Nzc5Mn0.gyuIXCf4cnHAmw7aA76I-SDkuUT-GRF86300zTZZM1Y",
+							"type": "string"
+						}
+					]
+				},
 				"method": "GET",
 				"header": [],
 				"url": {
@@ -30,6 +40,16 @@
 		{
 			"name": "Listar Cargo Funcionario",
 			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJjb3ppbmhlaXJvQGdtYWlsLmNvbSIsInN0YXR1c0dlcmFsIjoxLCJpZFVzdWFyaW8iOjUsImlzcyI6IkFQSSBjb21hbmRhIHNlcnZpY2UiLCJmdW5jaW9uYXJpbyI6NiwiY2FyZ28iOjEsImV4cCI6MTczMDE5Nzc5Mn0.gyuIXCf4cnHAmw7aA76I-SDkuUT-GRF86300zTZZM1Y",
+							"type": "string"
+						}
+					]
+				},
 				"method": "GET",
 				"header": [],
 				"url": {
@@ -48,12 +68,22 @@
 			"response": []
 		},
 		{
-			"name": "Listar Status",
+			"name": "Listar Status geral",
 			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJHRVJFTlRFQEdNQUlMLkNPTSIsInN0YXR1c0dlcmFsIjoxLCJpZFVzdWFyaW8iOjMsImlzcyI6IkFQSSBjb21hbmRhIHNlcnZpY2UiLCJmdW5jaW9uYXJpbyI6MywiY2FyZ28iOjMsImV4cCI6MTczMDE5ODAzMH0.7KkWCS0iciNZvn9SJaUk-NQeweY3iCYAlm7HQCY_pk8",
+							"type": "string"
+						}
+					]
+				},
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "http://localhost:8080/dominio/status",
+					"raw": "http://localhost:8080/dominio/statusGeral",
 					"protocol": "http",
 					"host": [
 						"localhost"
@@ -61,7 +91,37 @@
 					"port": "8080",
 					"path": [
 						"dominio",
-						"status"
+						"statusGeral"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Listar Status Processo",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJHRVJFTlRFQEdNQUlMLkNPTSIsInN0YXR1c0dlcmFsIjoxLCJpZFVzdWFyaW8iOjMsImlzcyI6IkFQSSBjb21hbmRhIHNlcnZpY2UiLCJmdW5jaW9uYXJpbyI6MywiY2FyZ28iOjMsImV4cCI6MTczMDE5ODAzMH0.7KkWCS0iciNZvn9SJaUk-NQeweY3iCYAlm7HQCY_pk8",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/dominio/statusProcesso",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"dominio",
+						"statusProcesso"
 					]
 				}
 			},

@@ -8,8 +8,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 import com.projetoweb4.comandaRestaurante.dto.itemPedido.ItemPedidoDtoDetalhar;
@@ -17,10 +15,8 @@ import com.projetoweb4.comandaRestaurante.dto.statusItemPedido.ControleStatusIte
 import com.projetoweb4.comandaRestaurante.entity.ControleStatusItemPedido;
 import com.projetoweb4.comandaRestaurante.entity.Funcionario;
 import com.projetoweb4.comandaRestaurante.entity.ItemPedido;
-import com.projetoweb4.comandaRestaurante.entity.Login;
 import com.projetoweb4.comandaRestaurante.enumeration.StatusProcessoEnum;
 import com.projetoweb4.comandaRestaurante.repository.StatusPedidoRepository;
-import com.projetoweb4.comandaRestaurante.service.buscador.BuscarFuncionario;
 import com.projetoweb4.comandaRestaurante.service.buscador.BuscarItemPedido;
 import com.projetoweb4.comandaRestaurante.service.buscador.BuscarStatusProcesso;
 import com.projetoweb4.comandaRestaurante.service.recurso.TokenService;
@@ -39,7 +35,7 @@ public class ControleStatusItemPedidoService {
 	private BuscarStatusProcesso getStatusProcesso;
 	
 	@Autowired
-	private BuscarFuncionario getFuncionario;
+	private TokenService tokenService;
 
 	public Page<ItemPedidoDtoDetalhar> atualizar(
 			List<Long> idsItemPedido, 
@@ -57,7 +53,7 @@ public class ControleStatusItemPedidoService {
 		//SÓ PODE ir para o Entregue se o status atual for Pronto
 		
 		// pega funcionario a partir do token jwt getFuncionarioAutenticado()
-		Funcionario funcionario = getFuncionarioAutenticado();
+		Funcionario funcionario = tokenService.getFuncionarioAutenticado();
 		
 		//pegar cargo a partir do token jwt
 		 String cargo = funcionario.getCargoFuncionario().getCargo();
@@ -90,24 +86,7 @@ public class ControleStatusItemPedidoService {
 	}
 
 	   // Método para obter o funcionário autenticado a partir do token JWT
-    private Funcionario getFuncionarioAutenticado() {
-        // Obtém o objeto de autenticação do contexto de segurança atual
-        var authentication = SecurityContextHolder.getContext().getAuthentication();
 
-        // Verifica se o Principal está configurado
-        if (authentication == null || !(authentication.getPrincipal() instanceof Login)) {
-            throw new ValidacaoException("Usuário não autenticado");
-        }
-
-        // Extrai o usuário autenticado (tipo Login) diretamente do Principal
-        Login usuario = (Login) authentication.getPrincipal();
-
-        // Usa o TokenService para obter o ID do funcionário através do ID do usuário autenticado
-        Long funcionarioId = usuario.getFuncionario().getId();
-
-        // Busca o funcionário com base no ID obtido
-        return getFuncionario.buscar(funcionarioId);
-    }
     
     private void atualizarControleStatus(ControleStatusItemPedido controleStatus,
     		Funcionario funcionario, 

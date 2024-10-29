@@ -15,8 +15,10 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.util.UriComponentsBuilder;
 
@@ -24,7 +26,10 @@ import com.projetoweb4.comandaRestaurante.dto.login.DadosAutenticacao;
 import com.projetoweb4.comandaRestaurante.dto.login.DadosTokenJWT;
 import com.projetoweb4.comandaRestaurante.dto.login.LoginDtoCadastrar;
 import com.projetoweb4.comandaRestaurante.dto.login.LoginDtoDetalhar;
+import com.projetoweb4.comandaRestaurante.dto.login.LoginTrocarSenhaDtoAtualizar;
 import com.projetoweb4.comandaRestaurante.entity.Login;
+import com.projetoweb4.comandaRestaurante.enumeration.CargoFuncionarioEnum;
+import com.projetoweb4.comandaRestaurante.enumeration.StatusGeralEnum;
 import com.projetoweb4.comandaRestaurante.service.LoginService;
 import com.projetoweb4.comandaRestaurante.service.recurso.TokenService;
 
@@ -74,6 +79,16 @@ public class LoginController {
 
 		return ResponseEntity.ok(service.listarTodos(paginacao));
 	}
+    
+    @PreAuthorize("hasRole('GERENTE')")
+	@GetMapping("/status")
+	public ResponseEntity<Page<LoginDtoDetalhar>> listarPorStatus(
+			@RequestParam(required = false) StatusGeralEnum statusGeral,
+			@RequestParam(required = false) CargoFuncionarioEnum cargoFuncionario,
+			@PageableDefault(size = 10) Pageable paginacao) {
+
+		return ResponseEntity.ok(service.listarTodosPorStatus(paginacao, statusGeral, cargoFuncionario));
+	}
 
     @PreAuthorize("hasRole('GERENTE')")
 	@GetMapping("/{id}")
@@ -84,12 +99,20 @@ public class LoginController {
 
     @PostMapping("/autenticar")
     public ResponseEntity<DadosTokenJWT> efetuarLogin(@RequestBody @Valid DadosAutenticacao dados) {
-        var authenticationToken = new UsernamePasswordAuthenticationToken(dados.login(), dados.senha());
+        var authenticationToken = new UsernamePasswordAuthenticationToken(dados.login().toUpperCase(), dados.senha());
         var authentication = manager.authenticate(authenticationToken);
 
         var tokenJWT = tokenService.gerarToken((Login) authentication.getPrincipal());
 
         return ResponseEntity.ok(new DadosTokenJWT(tokenJWT));
     }
+    
+	@PutMapping
+	@Transactional
+	public ResponseEntity<LoginDtoDetalhar> atualizarSenha(@RequestBody LoginTrocarSenhaDtoAtualizar dados) {
+
+		return ResponseEntity.ok(service.atualizarSenha(dados));
+	}
+	
 
 }

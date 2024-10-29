@@ -4,7 +4,9 @@ import java.time.Instant;
 import java.time.LocalDateTime;
 import java.time.ZoneOffset;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 import com.auth0.jwt.JWT;
@@ -12,13 +14,19 @@ import com.auth0.jwt.algorithms.Algorithm;
 import com.auth0.jwt.exceptions.JWTCreationException;
 import com.auth0.jwt.exceptions.JWTVerificationException;
 import com.auth0.jwt.interfaces.DecodedJWT;
+import com.projetoweb4.comandaRestaurante.entity.Funcionario;
 import com.projetoweb4.comandaRestaurante.entity.Login;
+import com.projetoweb4.comandaRestaurante.service.buscador.BuscarFuncionario;
+import com.projetoweb4.comandaRestaurante.validacoes.ValidacaoException;
 
 @Service
 public class TokenService {
 
     @Value("${api.security.token.secret}")
     private String secret;
+    
+	@Autowired
+	private BuscarFuncionario getFuncionario;
 
     public String gerarToken(Login usuario) {
         try {
@@ -74,5 +82,23 @@ public class TokenService {
         }
     }
     
+    public Funcionario getFuncionarioAutenticado() {
+        // Obtém o objeto de autenticação do contexto de segurança atual
+        var authentication = SecurityContextHolder.getContext().getAuthentication();
+
+        // Verifica se o Principal está configurado
+        if (authentication == null || !(authentication.getPrincipal() instanceof Login)) {
+            throw new ValidacaoException("Usuário não autenticado");
+        }
+
+        // Extrai o usuário autenticado (tipo Login) diretamente do Principal
+        Login usuario = (Login) authentication.getPrincipal();
+
+        // Usa o TokenService para obter o ID do funcionário através do ID do usuário autenticado
+        Long funcionarioId = usuario.getFuncionario().getId();
+
+        // Busca o funcionário com base no ID obtido
+        return getFuncionario.buscar(funcionarioId);
+    }
     
 }

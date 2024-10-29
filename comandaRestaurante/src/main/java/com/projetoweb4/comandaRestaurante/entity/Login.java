@@ -1,5 +1,6 @@
 package com.projetoweb4.comandaRestaurante.entity;
 
+import java.text.Normalizer;
 import java.util.Collection;
 import java.util.List;
 
@@ -17,7 +18,6 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
-import java.text.Normalizer;
 
 @Table(name = "tb_login")
 @Entity(name = "Login")

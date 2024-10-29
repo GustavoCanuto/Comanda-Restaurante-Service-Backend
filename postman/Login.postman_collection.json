@@ -10,11 +10,21 @@
 		{
 			"name": "Cadastrar Login",
 			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJHRVJFTlRFQEdNQUlMLkNPTSIsInN0YXR1c0dlcmFsIjoxLCJpZFVzdWFyaW8iOjMsImlzcyI6IkFQSSBjb21hbmRhIHNlcnZpY2UiLCJmdW5jaW9uYXJpbyI6MywiY2FyZ28iOjMsImV4cCI6MTczMDE5ODAzMH0.7KkWCS0iciNZvn9SJaUk-NQeweY3iCYAlm7HQCY_pk8",
+							"type": "string"
+						}
+					]
+				},
 				"method": "POST",
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n     \"email\": \"teste@gmail.com\",\r\n     \"senha\": \"teste\",\r\n     \"idFuncionario\": 2\r\n}",
+					"raw": "{\r\n     \"email\": \"cozinheiro2@gmail.com\",\r\n     \"senha\": \"123\",\r\n     \"funcionario\":  \r\n        {\r\n            \"nome\": \"gustavo cozinheiro2\",\r\n            \"cpf\": \"111.222.337-90\",\r\n            \"cargoFuncionario\": \"cozinheiro\"\r\n        }\r\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -36,11 +46,53 @@
 			"response": []
 		},
 		{
+			"name": "Autenticar Login",
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n     \"login\": \"GARçOn@gmail.com\",\r\n     \"senha\": \"1234\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/login/autenticar",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"login",
+						"autenticar"
+					]
+				}
+			},
+			"response": []
+		},
+		{
 			"name": "Listar todos Login",
 			"protocolProfileBehavior": {
 				"disableBodyPruning": true
 			},
 			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJHRVJFTlRFQEdNQUlMLkNPTSIsInN0YXR1c0dlcmFsIjoxLCJpZFVzdWFyaW8iOjMsImlzcyI6IkFQSSBjb21hbmRhIHNlcnZpY2UiLCJmdW5jaW9uYXJpbyI6MywiY2FyZ28iOjMsImV4cCI6MTczMDE5ODAzMH0.7KkWCS0iciNZvn9SJaUk-NQeweY3iCYAlm7HQCY_pk8",
+							"type": "string"
+						}
+					]
+				},
 				"method": "GET",
 				"header": [],
 				"body": {
@@ -72,6 +124,16 @@
 				"disableBodyPruning": true
 			},
 			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJHRVJFTlRFQEdNQUlMLkNPTSIsInN0YXR1c0dlcmFsIjoxLCJpZFVzdWFyaW8iOjMsImlzcyI6IkFQSSBjb21hbmRhIHNlcnZpY2UiLCJmdW5jaW9uYXJpbyI6MywiY2FyZ28iOjMsImV4cCI6MTczMDE5ODAzMH0.7KkWCS0iciNZvn9SJaUk-NQeweY3iCYAlm7HQCY_pk8",
+							"type": "string"
+						}
+					]
+				},
 				"method": "GET",
 				"header": [],
 				"body": {
@@ -84,7 +146,7 @@
 					}
 				},
 				"url": {
-					"raw": "http://localhost:8080/login/status?",
+					"raw": "http://localhost:8080/login/status?cargoFuncionario=cozinheiro&statusGeral=desativado",
 					"protocol": "http",
 					"host": [
 						"localhost"
@@ -96,8 +158,12 @@
 					],
 					"query": [
 						{
-							"key": "",
-							"value": null
+							"key": "cargoFuncionario",
+							"value": "cozinheiro"
+						},
+						{
+							"key": "statusGeral",
+							"value": "desativado"
 						}
 					]
 				}
@@ -110,6 +176,16 @@
 				"disableBodyPruning": true
 			},
 			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJHRVJFTlRFQEdNQUlMLkNPTSIsInN0YXR1c0dlcmFsIjoxLCJpZFVzdWFyaW8iOjMsImlzcyI6IkFQSSBjb21hbmRhIHNlcnZpY2UiLCJmdW5jaW9uYXJpbyI6MywiY2FyZ28iOjMsImV4cCI6MTczMDE5ODAzMH0.7KkWCS0iciNZvn9SJaUk-NQeweY3iCYAlm7HQCY_pk8",
+							"type": "string"
+						}
+					]
+				},
 				"method": "GET",
 				"header": [],
 				"body": {
@@ -139,6 +215,16 @@
 		{
 			"name": "Deletar Login",
 			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJHRVJFTlRFQEdNQUlMLkNPTSIsInN0YXR1c0dlcmFsIjoxLCJpZFVzdWFyaW8iOjMsImlzcyI6IkFQSSBjb21hbmRhIHNlcnZpY2UiLCJmdW5jaW9uYXJpbyI6MywiY2FyZ28iOjMsImV4cCI6MTczMDE5ODAzMH0.7KkWCS0iciNZvn9SJaUk-NQeweY3iCYAlm7HQCY_pk8",
+							"type": "string"
+						}
+					]
+				},
 				"method": "DELETE",
 				"header": [],
 				"body": {
@@ -151,15 +237,53 @@
 					}
 				},
 				"url": {
-					"raw": "http://localhost:8080/produto/2",
+					"raw": "http://localhost:8080/login/1",
 					"protocol": "http",
 					"host": [
 						"localhost"
 					],
 					"port": "8080",
 					"path": [
-						"produto",
-						"2"
+						"login",
+						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Atualiza Senha do Login",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJHQVLDh09OQEdNQUlMLkNPTSIsInN0YXR1c0dlcmFsIjoxLCJpZFVzdWFyaW8iOjQsImlzcyI6IkFQSSBjb21hbmRhIHNlcnZpY2UiLCJmdW5jaW9uYXJpbyI6NCwiY2FyZ28iOjIsImV4cCI6MTczMDE5ODM4N30.yJIC0DW5NV_zxh64Q4n8DXYCf4Df0ywiUmUW-JbFx2w",
+							"type": "string"
+						}
+					]
+				},
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n     \"senhaAntiga\": \"123\",\r\n     \"novaSenha\": \"1234\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/login",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"login"
 					]
 				}
 			},

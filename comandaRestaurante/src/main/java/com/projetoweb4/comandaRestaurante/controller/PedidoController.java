@@ -34,7 +34,7 @@ public class PedidoController {
 	@Autowired
 	private PedidoService service;
 
-	@PreAuthorize("hasRole('GARCON')")
+	@PreAuthorize("hasAnyRole('GERENTE', 'GARCON')")
 	@PostMapping
 	@Transactional
 	public ResponseEntity<PedidoDtoDetalhar> cadastrar(@RequestBody @Valid PedidoDtoCadastrar dados,
@@ -47,7 +47,7 @@ public class PedidoController {
 		return ResponseEntity.created(uri).body(entidade);
 	}
 	
-	@PreAuthorize("hasRole('GERENTE','GARCON')")
+	@PreAuthorize("hasAnyRole('GERENTE', 'GARCON')")
 	@PutMapping("/{id}")
 	@Transactional
 	public ResponseEntity<PedidoDtoDetalhar> atualizar(@PathVariable Long id,
@@ -79,6 +79,15 @@ public class PedidoController {
 			@PageableDefault(size = 10) Pageable paginacao) {
 		
 		return ResponseEntity.ok(service.listarTodosPorStatus(paginacao, statusProcesso));
+	}
+	
+	@PreAuthorize("hasAnyRole('GERENTE', 'GARCON')")
+	@GetMapping("/status-meus-pedidos")
+	public ResponseEntity<Page<PedidoDtoDetalhar>> listarPorStatusMeusPedidos(
+			@RequestParam(required = false) StatusProcessoEnum statusProcesso,
+			@PageableDefault(size = 10) Pageable paginacao) {
+		
+		return ResponseEntity.ok(service.listarTodosPorStatusMeusPedidos(paginacao, statusProcesso));
 	}
 	
 	@GetMapping("/{id}")

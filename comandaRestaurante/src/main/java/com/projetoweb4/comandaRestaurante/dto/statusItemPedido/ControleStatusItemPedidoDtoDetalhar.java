@@ -1,6 +1,7 @@
 package com.projetoweb4.comandaRestaurante.dto.statusItemPedido;
 
 import java.time.LocalDateTime;
+import java.util.Objects;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.projetoweb4.comandaRestaurante.dto.domain.StatusDtoDetalhar;
@@ -23,7 +24,8 @@ public record ControleStatusItemPedidoDtoDetalhar(
 			 entidade.getDescricaoStatus(),  
 			entidade.getDataHoraIniciado(), entidade.getDataHoraPronto(), 
 			entidade.getDataHoraEntregue(),
-			new FuncionarioDtoDetalhar(entidade.getFuncionario())
+			Objects.nonNull(entidade.getFuncionario()) ? 
+					new FuncionarioDtoDetalhar(entidade.getFuncionario()) : null
 		);
 	}
 

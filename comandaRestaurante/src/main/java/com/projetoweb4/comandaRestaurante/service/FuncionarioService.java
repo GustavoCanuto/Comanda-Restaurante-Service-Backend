@@ -24,37 +24,6 @@ public class FuncionarioService{
 	@Autowired
 	private BuscarFuncionario getFuncionario;
 
-//	@Override
-//	public FuncionarioDtoDetalhar cadastrar(FuncionarioDtoCadastrar dados) {
-//
-//		if (repository.existsByCpf(dados.cpf())) {
-//			throw new ValidacaoException("Cpf já registrado!");
-//		}
-//
-//		CargoFuncionario cargoFuncionario = getCargoFuncionario.buscar(dados.cargoFuncionario().getId());
-//		
-//		Funcionario funcionario = new Funcionario(dados, cargoFuncionario); 
-//
-//		repository.save(funcionario);
-//        
-//		return new FuncionarioDtoDetalhar(funcionario);
-//	}
-
-//	@Override
-//	public FuncionarioDtoDetalhar buscarPorId(Long id) {
-//		return new FuncionarioDtoDetalhar(repository.getReferenceById(id));
-//	}
-
-//	@Override
-//	public Page<FuncionarioDtoDetalhar> listarTodos(Pageable paginacao) {
-//		return repository.findAll(paginacao).map(FuncionarioDtoDetalhar::new);
-//	}
-
-//	@Override
-//	public void deletar(Long id) {
-//		repository.deleteById(id);
-//	}
-
 	public FuncionarioDtoDetalhar atualizar(FuncionarioDtoCadastrar dados, Long id) {
 		
 		if (repository.existsByCpf(dados.cpf())) {
