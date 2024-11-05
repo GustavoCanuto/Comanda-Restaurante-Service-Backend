@@ -5,7 +5,7 @@ stages:
 ajuste_imagens:
   stage: build
   tags:
-    - cloud
+    - gcp
   image: openjdk:21
   before_script:
     - sudo apt-get update
@@ -27,7 +27,7 @@ criar_imagens:
   - ajuste_imagens
   image: eclipse-temurin:21-jdk
   tags:
-    - cloud
+    - gcp
   script:
     - cd comandaRestaurante
     - ls target
@@ -39,7 +39,7 @@ executar_imagens:
   needs:
     - criar_imagens
   tags:
-    - cloud
+    - gcp
   script:
   - TIMESTAMP=$(date +%s)
   - docker rm -f projetobackend_$TIMESTAMP || true
