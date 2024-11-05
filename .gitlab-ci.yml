@@ -9,6 +9,7 @@ ajuste_imagens:
   image: openjdk:21
   before_script:
     - sudo apt-get update
+    - sudo apt-get install -y maven
     - wget https://download.oracle.com/java/21/latest/jdk-21_linux-x64_bin.deb -O jdk-21.deb
     - sudo apt-get install -y ./jdk-21.deb
     - export JAVA_HOME=/usr/lib/jvm/jdk-21.0.5-oracle-x64
