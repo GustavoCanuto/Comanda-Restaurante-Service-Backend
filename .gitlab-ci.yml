@@ -1,0 +1,46 @@
+stages:
+  - build
+  - deploy
+
+ajuste_imagens:
+  stage: build
+  tags:
+    - cloud
+  image: openjdk:21
+  before_script:
+    - sudo apt-get update
+    - wget https://download.oracle.com/java/21/latest/jdk-21_linux-x64_bin.deb -O jdk-21.deb
+    - sudo apt-get install -y ./jdk-21.deb
+    - export JAVA_HOME=/usr/lib/jvm/jdk-21.0.5-oracle-x64
+    - export PATH=$JAVA_HOME/bin:$PATH
+    - sudo update-alternatives --install /usr/bin/java java $JAVA_HOME/bin/java 1
+  script:
+    - cd comandaRestaurante
+    - mvn clean package
+  artifacts:
+    paths:
+      - comandaRestaurante/target/
+
+criar_imagens:
+  stage: build
+  needs:
+  - ajuste_imagens
+  image: eclipse-temurin:21-jdk
+  tags:
+    - cloud
+  script:
+    - cd comandaRestaurante
+    - ls target
+    - docker build -t joaosilvafatec/comanda-restaurante:2.0 .
+    - docker push  joaosilvafatec/comanda-restaurante:2.0
+
+executar_imagens:
+  stage: deploy
+  needs:
+    - criar_imagens
+  tags:
+    - cloud
+  script:
+  - TIMESTAMP=$(date +%s)
+  - docker rm -f projetobackend_$TIMESTAMP || true
+  - docker run -dti --name projetobackend_$TIMESTAMP -p 8080:8080 joaosilvafatec/comanda-restaurante:2.0
