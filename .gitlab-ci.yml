@@ -2,6 +2,12 @@ stages:
   - build
   - deploy
 
+workflow: 
+  rules: 
+    - if: $CI_COMMIT_BRANCH != "main" 
+      when: never
+    - when: always
+
 ajuste_imagens:
   stage: build
   tags:
