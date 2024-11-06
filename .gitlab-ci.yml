@@ -47,8 +47,11 @@ executar_imagens:
     - criar_imagens
   tags:
     - gcp
+  before_script:
+    - sudo apt-get update
+    - sudo apt-get install -y psmisc
   script:
   - TIMESTAMP=$(date +%s)
-  - if lsof -i :8080; then sudo fuser -k 8080/tcp; fi
+  - sudo fuser -k 8080/tcp || true
   - docker rm -f projetobackend_$TIMESTAMP || true
   - docker run -dti --name projetobackend_$TIMESTAMP -p 8080:8080 joaosilvafatec/comanda-restaurante:2.0
