@@ -6,6 +6,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
+import com.projetoweb4.comandaRestaurante.entity.Funcionario;
 import com.projetoweb4.comandaRestaurante.entity.Pedido;
 import com.projetoweb4.comandaRestaurante.entity.domain.StatusProcesso;
 
@@ -26,4 +27,9 @@ public interface PedidoRepository extends JpaRepository<Pedido, Long> {
 		       ") " +
 		       "GROUP BY p.id")
 	Page<Pedido> findAllPedidosComItensCancelados(@Param("statusCancelado") StatusProcesso statusCancelado, Pageable pageable);
+
+	//Por Funcionario
+	Page<Pedido> findByFuncionarioAndItensPedido_ControleStatusItemPedido_StatusProcesso(Funcionario funcionario, StatusProcesso statusProcesso, Pageable paginacao);
+	
+	Page<Pedido> findByFuncionarioAndItensPedido_ControleStatusItemPedido_StatusProcessoNot(Funcionario funcionario, StatusProcesso statusProcesso, Pageable paginacao);
 }

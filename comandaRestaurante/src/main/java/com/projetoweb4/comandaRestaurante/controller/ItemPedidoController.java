@@ -5,6 +5,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -34,7 +35,7 @@ public class ItemPedidoController {
 	@Autowired
 	private ItemPedidoService service;
 
-
+	@PreAuthorize("hasAnyRole('GERENTE', 'GARCON')")
 	@PostMapping
 	@Transactional
 	public ResponseEntity<ItemPedidoDtoDetalhar> cadastrar(@RequestBody @Valid ItemPedidoDtoCadastrar dados,
@@ -47,7 +48,7 @@ public class ItemPedidoController {
 		return ResponseEntity.created(uri).body(entidade);
 	}
 	
-
+	@PreAuthorize("hasAnyRole('GERENTE', 'GARCON')")
 	@PutMapping("/{id}")
 	@Transactional
 	public ResponseEntity<ItemPedidoDtoDetalhar> atualizar(@PathVariable Long id,
@@ -56,6 +57,7 @@ public class ItemPedidoController {
 		return ResponseEntity.ok(service.atualizar(dados, id));
 	}
 	
+	@PreAuthorize("hasRole('GERENTE')")
 	@DeleteMapping("/{id}")
 	@Transactional
 	public ResponseEntity<Void> excluir(@PathVariable Long id) {
@@ -79,6 +81,15 @@ public class ItemPedidoController {
 			@PageableDefault(size = 10) Pageable paginacao) {
 		
 		return ResponseEntity.ok(service.listarTodosPorStatus(paginacao, statusProcesso, tipoProduto));
+	}
+	
+	@PreAuthorize("hasAnyRole('GERENTE', 'GARCON')")
+	@GetMapping("/status-meus-itens-pedidos")
+	public ResponseEntity<Page<ItemPedidoDtoDetalhar>> listarPorStatusMeusPedidos(
+			@RequestParam(required = false) StatusProcessoEnum statusProcesso,
+			@PageableDefault(size = 10) Pageable paginacao) {
+		
+		return ResponseEntity.ok(service.listarTodosPorStatusMeusItensPedidos(paginacao, statusProcesso));
 	}
 	
 	@GetMapping("/{id}")

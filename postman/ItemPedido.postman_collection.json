@@ -10,6 +10,16 @@
 		{
 			"name": "Cadastrar Item Pedido",
 			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJHQVLDh09OQEdNQUlMLkNPTSIsInN0YXR1c0dlcmFsIjoxLCJpZFVzdWFyaW8iOjQsImlzcyI6IkFQSSBjb21hbmRhIHNlcnZpY2UiLCJmdW5jaW9uYXJpbyI6NCwiY2FyZ28iOjIsImV4cCI6MTczMDE5ODY4OX0.j79_AhDPZX8jv6hUZNdGSv_DsiitGjDM_uvn6uZm9V8",
+							"type": "string"
+						}
+					]
+				},
 				"method": "POST",
 				"header": [],
 				"body": {
@@ -70,6 +80,16 @@
 				"disableBodyPruning": true
 			},
 			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJHQVLDh09OQEdNQUlMLkNPTSIsInN0YXR1c0dlcmFsIjoxLCJpZFVzdWFyaW8iOjQsImlzcyI6IkFQSSBjb21hbmRhIHNlcnZpY2UiLCJmdW5jaW9uYXJpbyI6NCwiY2FyZ28iOjIsImV4cCI6MTczMDE5ODY4OX0.j79_AhDPZX8jv6hUZNdGSv_DsiitGjDM_uvn6uZm9V8",
+							"type": "string"
+						}
+					]
+				},
 				"method": "GET",
 				"header": [],
 				"body": {
@@ -101,6 +121,16 @@
 				"disableBodyPruning": true
 			},
 			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJHQVLDh09OQEdNQUlMLkNPTSIsInN0YXR1c0dlcmFsIjoxLCJpZFVzdWFyaW8iOjQsImlzcyI6IkFQSSBjb21hbmRhIHNlcnZpY2UiLCJmdW5jaW9uYXJpbyI6NCwiY2FyZ28iOjIsImV4cCI6MTczMDE5ODY4OX0.j79_AhDPZX8jv6hUZNdGSv_DsiitGjDM_uvn6uZm9V8",
+							"type": "string"
+						}
+					]
+				},
 				"method": "GET",
 				"header": [],
 				"body": {
@@ -113,7 +143,7 @@
 					}
 				},
 				"url": {
-					"raw": "http://localhost:8080/item-pedido/status?statusProcesso=A_FAZER&tipoProduto=BEBIDA",
+					"raw": "http://localhost:8080/item-pedido/status?statusProcesso=A_FAZER&tipoProduto=PRATO",
 					"protocol": "http",
 					"host": [
 						"localhost"
@@ -130,7 +160,55 @@
 						},
 						{
 							"key": "tipoProduto",
-							"value": "BEBIDA"
+							"value": "PRATO"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Listar todos Meus Itens Pedido Por Status e/ou TipoProduto",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJHQVLDh09OQEdNQUlMLkNPTSIsInN0YXR1c0dlcmFsIjoxLCJpZFVzdWFyaW8iOjQsImlzcyI6IkFQSSBjb21hbmRhIHNlcnZpY2UiLCJmdW5jaW9uYXJpbyI6NCwiY2FyZ28iOjIsImV4cCI6MTczMDE5ODY4OX0.j79_AhDPZX8jv6hUZNdGSv_DsiitGjDM_uvn6uZm9V8",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"nome\": \"gf\",\r\n  \"descricao\": \"Pizza clássica com molho de tomate, queijo mozzarella e manjericão fresco\",\r\n  \"preco\": 35.90,\r\n  \"linkImagem\": \"https://example.com/imagem/pizza-margherita.jpg\",\r\n  \"tipoProduto\": \"Bebida_t\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/item-pedido/status-meus-itens-pedidos?statusProcesso=fazendo",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"item-pedido",
+						"status-meus-itens-pedidos"
+					],
+					"query": [
+						{
+							"key": "statusProcesso",
+							"value": "fazendo"
 						}
 					]
 				}

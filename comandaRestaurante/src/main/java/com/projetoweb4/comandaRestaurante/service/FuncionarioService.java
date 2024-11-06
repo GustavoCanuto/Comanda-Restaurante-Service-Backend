@@ -1,8 +1,6 @@
 package com.projetoweb4.comandaRestaurante.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import com.projetoweb4.comandaRestaurante.dto.funcionario.FuncionarioDtoCadastrar;
@@ -15,7 +13,7 @@ import com.projetoweb4.comandaRestaurante.service.buscador.BuscarFuncionario;
 import com.projetoweb4.comandaRestaurante.validacoes.ValidacaoException;
 
 @Service
-public class FuncionarioService implements CrudService<FuncionarioDtoDetalhar, FuncionarioDtoCadastrar, Long>{
+public class FuncionarioService{
 
 	@Autowired
 	private FuncionarioRepository repository;
@@ -26,38 +24,6 @@ public class FuncionarioService implements CrudService<FuncionarioDtoDetalhar, F
 	@Autowired
 	private BuscarFuncionario getFuncionario;
 
-	@Override
-	public FuncionarioDtoDetalhar cadastrar(FuncionarioDtoCadastrar dados) {
-
-		if (repository.existsByCpf(dados.cpf())) {
-			throw new ValidacaoException("Cpf já registrado!");
-		}
-
-		CargoFuncionario cargoFuncionario = getCargoFuncionario.buscar(dados.cargoFuncionario().getId());
-		
-		Funcionario funcionario = new Funcionario(dados, cargoFuncionario); 
-
-		repository.save(funcionario);
-        
-		return new FuncionarioDtoDetalhar(funcionario);
-	}
-
-	@Override
-	public FuncionarioDtoDetalhar buscarPorId(Long id) {
-		return new FuncionarioDtoDetalhar(repository.getReferenceById(id));
-	}
-
-	@Override
-	public Page<FuncionarioDtoDetalhar> listarTodos(Pageable paginacao) {
-		return repository.findAll(paginacao).map(FuncionarioDtoDetalhar::new);
-	}
-
-	@Override
-	public void deletar(Long id) {
-		repository.deleteById(id);
-	}
-
-	@Override
 	public FuncionarioDtoDetalhar atualizar(FuncionarioDtoCadastrar dados, Long id) {
 		
 		if (repository.existsByCpf(dados.cpf())) {
@@ -73,7 +39,5 @@ public class FuncionarioService implements CrudService<FuncionarioDtoDetalhar, F
         
 		return new FuncionarioDtoDetalhar(funcionario);
 	}
-	
-
 
 }

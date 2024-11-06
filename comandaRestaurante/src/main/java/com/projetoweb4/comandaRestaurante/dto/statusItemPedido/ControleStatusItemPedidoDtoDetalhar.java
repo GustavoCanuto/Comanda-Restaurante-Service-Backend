@@ -1,9 +1,11 @@
 package com.projetoweb4.comandaRestaurante.dto.statusItemPedido;
 
 import java.time.LocalDateTime;
+import java.util.Objects;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.projetoweb4.comandaRestaurante.dto.domain.StatusDtoDetalhar;
+import com.projetoweb4.comandaRestaurante.dto.funcionario.FuncionarioDtoDetalhar;
 import com.projetoweb4.comandaRestaurante.entity.ControleStatusItemPedido;
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
@@ -13,13 +15,17 @@ public record ControleStatusItemPedidoDtoDetalhar(
 		String descricao,
 		LocalDateTime dataHoraIniciado,
 		LocalDateTime dataHoraPronto,
-		LocalDateTime dataHoraEntregue
+		LocalDateTime dataHoraEntregue,
+		FuncionarioDtoDetalhar funcionario
 		) {
 
 	public ControleStatusItemPedidoDtoDetalhar(ControleStatusItemPedido entidade) {
 		this(entidade.getId(), new StatusDtoDetalhar(entidade.getStatus()),
 			 entidade.getDescricaoStatus(),  
-			entidade.getDataHoraIniciado(), entidade.getDataHoraPronto(), entidade.getDataHoraEntregue()
+			entidade.getDataHoraIniciado(), entidade.getDataHoraPronto(), 
+			entidade.getDataHoraEntregue(),
+			Objects.nonNull(entidade.getFuncionario()) ? 
+					new FuncionarioDtoDetalhar(entidade.getFuncionario()) : null
 		);
 	}
 

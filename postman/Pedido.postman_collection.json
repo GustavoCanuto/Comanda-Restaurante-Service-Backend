@@ -10,6 +10,16 @@
 		{
 			"name": "Cadastrar Pedido",
 			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJHQVLDh09OQEdNQUlMLkNPTSIsInN0YXR1c0dlcmFsIjoxLCJpZFVzdWFyaW8iOjQsImlzcyI6IkFQSSBjb21hbmRhIHNlcnZpY2UiLCJmdW5jaW9uYXJpbyI6NCwiY2FyZ28iOjIsImV4cCI6MTczMDE5ODY4OX0.j79_AhDPZX8jv6hUZNdGSv_DsiitGjDM_uvn6uZm9V8",
+							"type": "string"
+						}
+					]
+				},
 				"method": "POST",
 				"header": [],
 				"body": {
@@ -70,6 +80,16 @@
 				"disableBodyPruning": true
 			},
 			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJHQVLDh09OQEdNQUlMLkNPTSIsInN0YXR1c0dlcmFsIjoxLCJpZFVzdWFyaW8iOjQsImlzcyI6IkFQSSBjb21hbmRhIHNlcnZpY2UiLCJmdW5jaW9uYXJpbyI6NCwiY2FyZ28iOjIsImV4cCI6MTczMDE5ODY4OX0.j79_AhDPZX8jv6hUZNdGSv_DsiitGjDM_uvn6uZm9V8",
+							"type": "string"
+						}
+					]
+				},
 				"method": "GET",
 				"header": [],
 				"body": {
@@ -127,6 +147,54 @@
 						{
 							"key": "statusProcesso",
 							"value": "CANCELADO"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Listar todos Meus Pedidos Por Status",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJHRVJFTlRFQEdNQUlMLkNPTSIsInN0YXR1c0dlcmFsIjoxLCJpZFVzdWFyaW8iOjMsImlzcyI6IkFQSSBjb21hbmRhIHNlcnZpY2UiLCJmdW5jaW9uYXJpbyI6MywiY2FyZ28iOjMsImV4cCI6MTczMDE5ODAzMH0.7KkWCS0iciNZvn9SJaUk-NQeweY3iCYAlm7HQCY_pk8",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"nome\": \"gf\",\r\n  \"descricao\": \"Pizza clássica com molho de tomate, queijo mozzarella e manjericão fresco\",\r\n  \"preco\": 35.90,\r\n  \"linkImagem\": \"https://example.com/imagem/pizza-margherita.jpg\",\r\n  \"tipoProduto\": \"Bebida_t\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/pedido/status-meus-pedidos?statusProcesso=a_fazer",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"pedido",
+						"status-meus-pedidos"
+					],
+					"query": [
+						{
+							"key": "statusProcesso",
+							"value": "a_fazer"
 						}
 					]
 				}

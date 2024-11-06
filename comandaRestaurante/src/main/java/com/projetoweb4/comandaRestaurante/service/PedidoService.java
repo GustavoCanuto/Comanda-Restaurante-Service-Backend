@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
 import com.projetoweb4.comandaRestaurante.dto.pedido.PedidoDtoCadastrar;
 import com.projetoweb4.comandaRestaurante.dto.pedido.PedidoDtoDetalhar;
 import com.projetoweb4.comandaRestaurante.entity.ControleStatusItemPedido;
+import com.projetoweb4.comandaRestaurante.entity.Funcionario;
 import com.projetoweb4.comandaRestaurante.entity.ItemPedido;
 import com.projetoweb4.comandaRestaurante.entity.Pedido;
 import com.projetoweb4.comandaRestaurante.entity.domain.StatusProcesso;
@@ -21,6 +22,7 @@ import com.projetoweb4.comandaRestaurante.repository.PedidoRepository;
 import com.projetoweb4.comandaRestaurante.service.buscador.BuscarPedido;
 import com.projetoweb4.comandaRestaurante.service.buscador.BuscarProduto;
 import com.projetoweb4.comandaRestaurante.service.buscador.BuscarStatusProcesso;
+import com.projetoweb4.comandaRestaurante.service.recurso.TokenService;
 
 @Service
 public class PedidoService implements CrudService<PedidoDtoDetalhar, PedidoDtoCadastrar, Long>{
@@ -40,9 +42,12 @@ public class PedidoService implements CrudService<PedidoDtoDetalhar, PedidoDtoCa
 	@Autowired
 	private BuscarPedido getPedido;
 	
+	@Autowired
+	private TokenService tokenService;
+	
 	public PedidoDtoDetalhar cadastrar(PedidoDtoCadastrar dados) {
-
-		Pedido pedido = new Pedido(dados, null); 
+		
+		Pedido pedido = new Pedido(dados, tokenService.getFuncionarioAutenticado()); 
 
 		repository.save(pedido);
 
@@ -106,8 +111,32 @@ public class PedidoService implements CrudService<PedidoDtoDetalhar, PedidoDtoCa
 		return repository.findByItensPedido_ControleStatusItemPedido_StatusProcessoNot(status, paginacao)
 				.map(PedidoDtoDetalhar::new);
 	}
+	
+	public Page<PedidoDtoDetalhar> listarTodosPorStatusMeusPedidos(Pageable paginacao, StatusProcessoEnum statusProcesso) {
+		
+		Funcionario funcionario = tokenService.getFuncionarioAutenticado();
+		
+		//ele vai fazer um findAll nos pedidos porém só vai retornar o pedido se algum itemPedido tiver o idstatusProcesso mandado
+		if(!Objects.isNull(statusProcesso)) {
+			
+		StatusProcesso status = getStatusProcesso.buscar(statusProcesso.getId());
+		
+	    // Verifica se o status é CANCELADO
+			if (statusProcesso.getId() != StatusProcessoEnum.CANCELADO.getId()) {
+            // Retorna somente os pedidos em que TODOS os itens estão com o status CANCELADO
+        
+				return repository
+						.findByFuncionarioAndItensPedido_ControleStatusItemPedido_StatusProcesso(funcionario, status, paginacao)
+						.map(PedidoDtoDetalhar::new);
+	        }
+		}
 
-
+		StatusProcesso status = getStatusProcesso.buscar(StatusProcessoEnum.CANCELADO.getId());
+		
+		return repository.findByFuncionarioAndItensPedido_ControleStatusItemPedido_StatusProcessoNot(funcionario, status, paginacao)
+				.map(PedidoDtoDetalhar::new);
+	}
+	
 	public void deletar(Long id) {
 		//faz loop nos items e muda o status para cancelado
 		Pedido pedido = getPedido.buscar(id);
